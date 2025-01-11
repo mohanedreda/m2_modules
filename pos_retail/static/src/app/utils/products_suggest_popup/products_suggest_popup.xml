@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ProductsSuggestPopup">
+        <div class="popup popup-text popup-med combo-configurator-popup">
+            <header class="modal-header h2" t-esc="'Suggest Products buy with: '+ props.product.display_name"/>
+            <main class="product-list d-grid gap-1 p-1">
+                <div t-foreach="props.product.suggest_product_ids" t-as="product_id" t-key="product_id"
+                    class="d-flex flex-column m-1">
+                    <t t-set="product" t-value="pos.db.product_by_id[product_id]"/>
+                    <label class="combo-line" t-att-class="{ 'selected': this._isSelected(product.id) }">
+                        <ProductCard
+                            name="product.display_name"
+                            productId="product.id"
+                            price="formattedComboPrice(product)"
+                            imageUrl="product.getImageUrl()"
+                            onClick="() => this._selectProduct(product.id)"
+                        />
+                    </label>
+                </div>
+            </main>
+            <footer class="footer footer-flex modal-footer">
+                <button class="button highlight confirm btn btn-lg btn-primary"
+                    t-att-disabled="!areAllCombosSelected()"
+                    t-on-click="confirm">
+                        Add to order
+                </button>
+                <button class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                        Discard
+                </button>
+                <div class="ms-auto total-amount">
+                    Total <t t-esc="env.utils.formatCurrency(getTotalPrice())"/>
+                </div>
+            </footer>
+        </div>
+    </t>
+
+</templates>

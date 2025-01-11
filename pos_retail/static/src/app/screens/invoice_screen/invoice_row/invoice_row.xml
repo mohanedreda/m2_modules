@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.InvoiceRow">
+        <div class="order-row"
+             t-on-click="() => this.props.onClickInvoice(props.invoice)"
+             t-att-class="{ highlight: highlighted }">
+            <div class="col name p-2">
+                <div t-if="ui.isSmall">Order</div>
+                <div><t t-esc="name"/></div>
+            </div>
+            <div class="col date p-2">
+                <div t-if="ui.isSmall">Invoice Date</div>
+                <div><t t-esc="date"/></div>
+            </div>
+            <div class="col partner p-2">
+                <div t-if="ui.isSmall">Customer</div>
+                <div><t t-esc="partner"/></div>
+            </div>
+            <div class="col total p-2">
+                <div t-if="ui.isSmall">Total</div>
+                <div><t t-esc="total"/></div>
+            </div>
+            <div class="col due p-2">
+                <div t-if="ui.isSmall">Due</div>
+                <div><t t-esc="amount_residual"/></div>
+            </div>
+            <div class="col state p-2">
+                <div t-if="ui.isSmall">Status</div>
+                <div><t t-esc="state"/></div>
+            </div>
+            <div class="col state p-2">
+                <div t-if="ui.isSmall">Payment</div>
+                <div><t t-esc="payment_state"/></div>
+            </div>
+        </div>
+    </t>
+
+</templates>

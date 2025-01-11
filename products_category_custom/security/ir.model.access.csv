@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+products_category_custom.access_custom_category,access_custom_category,products_category_custom.model_custom_category,base.group_user,1,1,1,1
+products_category_custom.access_custom_session,access_custom_session,products_category_custom.model_custom_session,base.group_user,1,1,1,1
+products_category_custom.access_product_specification,access_product_specification,products_category_custom.model_product_specification,base.group_user,1,1,1,1
+products_category_custom.access_product_segment,access_product_segment,products_category_custom.model_product_segment,base.group_user,1,1,1,1
+products_category_custom.access_product_type,access_product_type,products_category_custom.model_product_type,base.group_user,1,1,1,1

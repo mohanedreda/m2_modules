@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.PaymentScreenPaymentLines" t-inherit="point_of_sale.PaymentScreenPaymentLines"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('payment-amount')][1]" position="inside">
+            <t t-if="line.currency_amount">
+                (<t t-out="line.currency_amount"/> <t t-out="line.currency.name"/>)
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('paymentline')]" position="before">
+            <div class="paymentline selected d-flex align-items-center bg-200" t-if="pos.config.enable_multi_currency">
+                <div class="payment-infos d-flex align-items-center justify-content-between flex-grow-1 px-1 py-1 my-1text-truncate cursor-pointer" t-on-click="() => this.selectLine(line)">
+                     <span class="payment-name">
+                         <select class="form-input" id="currency_id" name="currency_id" t-model="changes.currency_id" t-on-change="_changeCurrency">
+                            <t t-foreach="pos.currencies" t-as="currency" t-key="currency.id">
+                                <option t-att-value="currency.id" t-att-selected="changes.currency_id == currency.id ? true : undefined">
+                                    <t t-esc="currency.name" />
+                                </option>
+                            </t>
+                        </select>
+                     </span>
+                     <div class="payment-amount px-3">
+                        <input type="number"  t-on-change="_changeCurrencyAmount" class="form-input" placeholder="Amount" t-model="changes.currency_amount"/>
+                    </div>
+                </div>
+                <button class="delete-button btn btn-link mx-2 px-3"
+                    t-on-click="() => this._applyDifferenceCurrency()"
+                    aria-label="Apply" title="Apply">
+                    <i class="fa fa-check" />
+                </button>
+            </div>
+            <h5 class="title-category pt-3 pb-2 px-3 m-0 bg-view border-bottom border-2">
+                <t t-out="changes.currency_rate"/>
+            </h5>
+            <div class="paymentline selected d-flex align-items-center bg-200" t-if="pos.config.enable_set_payment_reference">
+                <div class="payment-infos d-flex align-items-center justify-content-between flex-grow-1 px-1 py-1 my-1text-truncate cursor-pointer">
+                    <input type="text" class="form-input" t-on-change="_changePaymentReference" placeholder="Payment Reference" t-model="changes.payment_reference"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+
+</templates>

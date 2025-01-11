@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="retail_view_pos_pos_form" model="ir.ui.view">
+        <field name="name">pos.order.retail</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_ids']/tree/field[@name='amount']" position="after">
+                <field name="payment_reference"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="type_id"/>
+                <field name="delivery_address"/>
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="inside">
+                <group name="sign" string="Signature">
+                    <field name="signature" widget="image"/>
+                </group>
+                <group name="remove_reason" string="Remove Reason">
+                    <field name="remove_user_id"/>
+                    <field name="remove_reason"/>
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_filter" model="ir.ui.view">
+        <field name="name">pos.order.list.select</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <field name="pos_branch_id"/>
+                <field name="type_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='config_id']" position="after">
+                <filter string="Branch" name="pos_branch_id" domain="[]" context="{'group_by': 'pos_branch_id'}"/>
+                <filter string="Order Type" name="type_id" domain="[]" context="{'group_by': 'type_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree" model="ir.ui.view">
+        <field name="name">pos.order.tree</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="before">
+                <field name="type_id"/>
+                <field name="pos_branch_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

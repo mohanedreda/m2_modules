@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.UpdateStockOnHandLocation">
+        <tr>
+            <td t-if="!props.withLot">
+                <select class="form-control popup-input list-line-input col start"
+                        t-model="props.item.location_id"
+                        placeholder="Stock Location"
+                        t-if="this.pos.stock_locations">
+                    <t t-foreach="this.pos.stock_locations" t-as="location" t-key="location.id">
+                        <option t-att-value="location.id"
+                                t-att-selected="location['id'] ? ((location['id'] === props.item.location_id) ? true : undefined) : undefined">
+                            <t t-esc="location.display_name"/>
+                        </option>
+                    </t>
+                </select>
+            </td>
+            <td t-if="props.withLot">
+                <input class="form-control"
+                   t-model="props.item.location_name"
+                   hidden="hidden"
+                   disabled="disabled"/>
+            </td>
+            <td t-if="props.withLot">
+                <input class="form-control"
+                   t-model="props.item.lot_name"
+                   hidden="hidden"
+                   disabled="disabled"/>
+            </td>
+            <td>
+                <input type="number" t-model="props.item.quantity"
+                   class="popup-input list-line-input col end"
+                   placeholder="Quantity"/>
+            </td>
+            <td t-if="!props.withLot and this.pos.config.multi_location">
+                <i class="oe_link_icon fa fa-plus"
+                   role="img"
+                   aria-label="Add one more row"
+                   title="Add one more row"
+                   style="color: #6EC89B"
+                   t-on-click="() => props.createNewItem(props.item)"></i>
+            </td>
+            <td t-if="this.pos.config.multi_location">
+                <i class="oe_link_icon fa fa-close"
+                   role="img"
+                   aria-label="Remove"
+                   title="Remove"
+                   style="color: #6EC89B"
+                   t-on-click="() => props.removeItem(props.item)"></i>
+            </td>
+        </tr>
+    </t>
+
+</templates>

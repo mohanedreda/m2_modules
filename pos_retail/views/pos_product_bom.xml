@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_product_bom_form" model="ir.ui.view">
+            <field name="name">pos.product.bom.form</field>
+            <field name="model">pos.product.bom</field>
+            <field name="arch" type="xml">
+                <form string="POS Product BOM">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="component_ids">
+                                    <tree string="Components" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_product_bom_tree" model="ir.ui.view">
+            <field name="name">pos.product.bom.tree</field>
+            <field name="model">pos.product.bom</field>
+            <field name="arch" type="xml">
+                <tree string="POS Product BOM">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_product_bom_search" model="ir.ui.view">
+            <field name="name">pos.product.bom.filter</field>
+            <field name="model">pos.product.bom</field>
+            <field name="arch" type="xml">
+                <search string="POS Product BOM">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_product_bom">
+            <field name="name">POS Product BOM</field>
+            <field name="res_model">pos.product.bom</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_product_bom"
+                  action="action_pos_product_bom"
+                  parent="point_of_sale.pos_config_menu_catalog"
+                  sequence="120"
+        />
+
+    </data>
+</odoo>

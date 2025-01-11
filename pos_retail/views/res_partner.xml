@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.retail</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="point_of_sale" string="Point Of Sale" groups="point_of_sale.group_pos_manager">
+                    <group>
+                        <group>
+                            <field name="discount_group" widget="boolean_toggle"/>
+                            <field name="discount_group_id"/>
+                        </group>
+                        <group>
+                            <field name="credit"/>
+                            <field name="debit"/>
+                            <field name="balance"/>
+                            <field name="limit_debit"/>
+                        </group>
+                        <group string="Customer's Credit Points">
+                            <field name="credit_history_ids" nolabel="1" colspan="4">
+                                <tree string="Credit Points">
+                                    <field name="create_date"/>
+                                    <field name="amount"/>
+                                    <field name="type"/>
+                                    <field name="pos_order_id"/>
+                                    <field name="payment_id"/>
+                                    <field name="move_id"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

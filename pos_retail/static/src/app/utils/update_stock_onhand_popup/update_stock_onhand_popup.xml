@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.UpdateStockOnHand">
+        <div class="popup popup-update-stock-onhand">
+            <div class="modal-header">
+                <h4 class="modal-title"><t t-esc="props.title" /></h4>
+            </div>
+            <main class="modal-body product-list-scroller touch-scrollable">
+                <table class="receipt-orderlines">
+                    <thead style="width: 100%">
+                        <tr class="header-table">
+                            <t t-if="!props.withLot">
+                                <th class="text-center" width="40%">Location Name</th>
+                                <th class="text-center" width="40%">Quantities</th>
+                                <th class="text-center" width="10%" t-if="this.pos.config.multi_location">Add (Type a Command [Enter])</th>
+                                <th class="text-center" width="10%" t-if="this.pos.config.multi_location">Delete</th>
+                            </t>
+                            <t t-else="">
+                                <th class="text-center" width="40%">Location Name</th>
+                                <th class="text-center" width="40%">Lot Name</th>
+                                <th class="text-center" width="40%" t-if="this.pos.config.multi_location">Quantities</th>
+                                <th class="text-center" width="10%" t-if="this.pos.config.multi_location">Hidden</th>
+                            </t>
+                        </tr>
+                    </thead>
+                    <tbody class='product-list-contents' t-on-remove-item="removeItem"
+                           t-on-create-new-item="createNewItem">
+                        <t t-foreach="state.array" t-as="item" t-key="item._id">
+                            <UpdateStockOnHandLocation item="item" withLot="props.withLot" removeItem="() => this.removeItem(item)"
+                                                       createNewItem="() => this.createNewItem()"/>
+                        </t>
+                    </tbody>
+                </table>
+            </main>
+            <t t-if="orderUiState.isSuccessful !== null">
+
+            </t>
+            <footer class="footer cash-move modal-footer">
+                <div class="button confirm highlight btn btn-lg btn-primary" t-on-click="confirm">
+                    <t t-esc="props.confirmText"/>
+                </div>
+                <div class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                    <t t-esc="props.cancelText"/>
+                </div>
+            </footer>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="retail_product_pricelist_item_form_view" model="ir.ui.view">
+        <field name="name">product.pricelist.item.pos_retail</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='applied_on']" position="after">
+                <field name="pos_category_ids"
+                       widget="many2many_tags"
+                       required="applied_on == 'pos_category'" invisible="applied_on != 'pos_category'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

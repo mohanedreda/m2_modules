@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.NewOrderButton">
+        <div class="header-cart-button control-button o_pricelist_button btn btn-light rounded-0 fw-bolder"
+             t-on-click="() => this.onCreateNewOrder()">
+            <i class="fa fa-plus" role="img" aria-label="New Order" title="New Order"/>
+            <div class="actionpad d-flex flex-column flex-grow-1 p-0 border-end">
+                <span>
+                    New Order
+                </span>
+            </div>
+        </div>
+    </t>
+
+</templates>

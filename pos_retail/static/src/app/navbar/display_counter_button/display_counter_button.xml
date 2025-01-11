@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.DisplayCounterButton">
+        <span class="summary-order">
+            <a class="dropdown-item with-badge py-2">
+                Total
+                <span class="badge text-bg-info rounded-pill py-1 ms-2" style="font-size: 16px" t-esc="totalAmount"/>
+            </a>
+        </span>
+        <span class="summary-order">
+            <a class="dropdown-item with-badge py-2">
+                Tax
+                <span class="badge text-bg-info rounded-pill py-1 ms-2" t-esc="totalTax"/>
+            </a>
+        </span>
+        <span class="summary-order">
+            <a class="dropdown-item with-badge py-2">
+                Disc
+                <span class="badge text-bg-info rounded-pill py-1 ms-2" t-esc="totalDiscount"/>
+            </a>
+        </span>
+        <span class="summary-order">
+            <a class="dropdown-item with-badge py-2">
+                Items
+                <span class="badge text-bg-info rounded-pill py-1 ms-2" t-esc="itemsCount"/>
+            </a>
+        </span>
+        <span class="summary-order">
+            <a class="dropdown-item with-badge py-2">
+                Quantities
+                <span class="badge text-bg-info rounded-pill py-1 ms-2" t-esc="quantityCount"/>
+            </a>
+        </span>
+    </t>
+
+</templates>

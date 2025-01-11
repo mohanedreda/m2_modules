@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.pos_retail</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="pos_inventory_section" position="after">
+                <block id="multi_store" title="Multi Store/Branch">
+                    <setting string="Assign to Branch">
+                        <field name="pos_branch_id"/>
+                    </setting>
+                </block>
+                <block id="sync_data" title="Sync Products, Customer and Pricelist">
+                    <setting string="Sync Customers" help="Update realtime change customers from backend to POS screen">
+                        <field name="sync_product"/>
+                    </setting>
+                    <setting string="Sync Products" help="Update realtime change products from backend to POS screen">
+                        <field name="sync_product"/>
+                    </setting>
+                    <setting string="Sync Pricelist"
+                             help="Update realtime change pricelists from backend to POS screen">
+                        <field name="sync_pricelist"/>
+                    </setting>
+                </block>
+                <block id="create_so" title="Sale Order">
+                    <setting string="Create sale order">
+                        <field name="sale_order"/>
+                    </setting>
+                    <setting string="Auto confirm sale" invisible="sale_order == False">
+                        <field name="sale_order_auto_confirm"/>
+                    </setting>
+                    <setting string="Auto invoice sale" invisible="sale_order == False">
+                        <field name="sale_order_auto_invoice"/>
+                    </setting>
+                    <setting string="Auto make delivery order" invisible="sale_order == False">
+                        <field name="sale_order_auto_delivery"/>
+                    </setting>
+                    <setting string="Required signature" invisible="sale_order == False">
+                        <field name="sale_order_required_signature"/>
+                    </setting>
+                    <setting help="Update sale order">
+                        <field name="update_sale_order"/>
+                    </setting>
+                    <setting help="Note Order">
+                        <field name="note_order"/>
+                    </setting>
+                </block>
+                <block id="stock" title="Stock Operation">
+                    <setting help="">
+                        <field name="enable_bom"/>
+                    </setting>
+                    <setting help="Source Location of Delivery Order">
+                        <field name="stock_location_id"/>
+                    </setting>
+                    <setting help="Dest Location of Delivery Order">
+                        <field name="stock_location_dest_id"/>
+                    </setting>
+                    <setting help="Show Stock on hand each Product">
+                        <field name="display_onhand"/>
+                    </setting>
+                    <setting help="Allow seller update stock on hand of products">
+                        <field name="update_stock_onhand"/>
+                    </setting>
+                    <setting help="If checked, allow seller sale products out of stock">
+                        <field name="allow_order_out_of_stock"/>
+                    </setting>
+                    <setting help="Allow seller see all stock available another locations">
+                        <field name="multi_location"/>
+                    </setting>
+                    <setting help="If checked, allow seller set Stock Operation Type each order">
+                        <field name="multi_stock_operation_type"/>
+                    </setting>
+                    <setting help="Locations allow update stock" invisible="multi_location == False">
+                        <field name="stock_location_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting help="Stock Operation Type for orders" invisible="multi_stock_operation_type == False">
+                        <field name="multi_stock_operation_type_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting help="Cashier/Seller can scan barcode of lot, product automatic add to cart">
+                        <field name="lot_serial_allow_scan"/>
+                    </setting>
+                    <setting help="Default Odoo POS required cashier/seller input lot/serial if Product tracking by lot/serial, this feature allow cashier/seller easy select lots of product available for sale">
+                        <field name="lot_serial_allow_select"/>
+                    </setting>
+                </block>
+                <block id="extend" title="Advance Features">
+                    <setting help="Allow pos users can print bill without payment">
+                        <field name="print_bill_without_payment"/>
+                    </setting>
+                    <setting>
+                        <field name="enable_cross_sell"/>
+                    </setting>
+                    <setting help="All items of cross sale automatic add to cart when added product" invisible="enable_cross_sell == False">
+                        <field name="enable_cross_sell_items"/>
+                    </setting>
+                    <setting>
+                        <field name="enable_pack_group"/>
+                    </setting>
+                    <setting help="Signature to Order">
+                        <field name="signature_order"/>
+                    </setting>
+                    <setting help="Create direct Purchase Order from point of sale">
+                        <field name="purchase_order"/>
+                    </setting>
+                    <setting help="Auto confirm Purchase Order" invisible="purchase_order == False">
+                        <field name="purchase_order_confirm"/>
+                    </setting>
+                    <setting
+                            help="Each product - multi barcode, you can define multi barcode at Barcode Tab of product form, each barcode can scan for add product to cart">
+                        <field name="product_multi_barcode"/>
+                    </setting>
+                    <setting
+                            help="Suggest products, allow seller sale one products and pos automatic suggest another products">
+                        <field name="suggest_products"/>
+                    </setting>
+                    <setting
+                            help="If you need each product can sale with many unit with difference price, you can active this feature">
+                        <field name="products_multi_unit"/>
+                    </setting>
+                    <setting help="Automatic set Invoice for new Order">
+                        <field name="order_auto_invoice"/>
+                    </setting>
+                    <setting help="If need Order to Invoice and without download PDF, check to it">
+                        <field name="order_auto_invoice_without_download"/>
+                    </setting>
+                    <setting help="Customer default new Order">
+                        <field name="partner_default_id"/>
+                    </setting>
+                    <setting help="Products default when add new Order">
+                        <field name="product_default_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting help="Allow seller assign orders between POS Session have opened. Pos Order sync or Call center">
+                        <field name="assign_orders_between_session"/>
+                    </setting>
+                    <setting help="Pre-Order, Allow seller save order to Draft/Quotation and register payment later">
+                        <field name="save_quotation"/>
+                    </setting>
+                    <setting
+                            help="Each customer group is each discount, you can set group for customer for apply discount automatic">
+                        <field name="discount_customer_group"/>
+                        <div>
+                            <button name="%(base.action_partner_category_form)d" icon="oi-arrow-right" type="action"
+                                    string="Customer Groups" class="btn-link"/>
+                        </div>
+                    </setting>
+                    <setting
+                            help="Customer's Credit Points, you can sale credit points to customer, and customer can use points for payment">
+                        <field name="credit_feature" readonly="pos_has_active_session"/>
+                        <div>
+                            <field name="credit_product_id"
+                                   readonly="pos_has_active_session"
+                                   required="credit_feature == True"
+                                   invisible="credit_feature == False"/>
+                        </div>
+                        <div>
+                            <field name="credit_program_id"
+                                   readonly="pos_has_active_session"
+                                   required="credit_feature == True"
+                                   invisible="credit_feature == False"/>
+                        </div>
+                    </setting>
+                    <setting help="POS Users can lock session and unlock via User POS Pin">
+                        <field name="lock_session"/>
+                    </setting>
+                    <setting help="POS Manager can management all users logged each POS Setting">
+                        <field name="users_logged_management"/>
+                    </setting>
+                    <setting
+                            help="POS Order Type">
+                        <field name="enable_order_type"/>
+                        <div>
+                            <field name="enable_type_id"
+                                   required="enable_order_type == True"
+                                   invisible="enable_order_type == False"/>
+                        </div>
+                    </setting>
+                </block>
+                <block id="security" title="Security">
+                    <setting help="">
+                        <field name="required_fill_reason_remove_order"/>
+                    </setting>
+                    <setting help="Limited disc (%) pos user can apply">
+                        <field name="limited_discount"/>
+                    </setting>
+                    <setting help="Limited disc amount (%) pos user can set" invisible="limited_discount == False">
+                        <field name="limited_discount_amount"/>
+                    </setting>
+                    <setting help="Hidden feature set Discount button">
+                        <field name="disable_set_discount"/>
+                    </setting>
+                    <setting help="Hidden feature set Price button">
+                        <field name="disable_set_price"/>
+                    </setting>
+                    <setting help="Hidden +/- button">
+                        <field name="disable_plus_minus"/>
+                    </setting>
+                    <setting help="Hidden feature Remove Line">
+                        <field name="disable_remove_line"/>
+                    </setting>
+                    <setting help="Hidden feature Payment">
+                        <field name="disable_set_payment"/>
+                    </setting>
+                    <setting help="Hidden feature set Customer button">
+                        <field name="disable_set_customer"/>
+                    </setting>
+                    <setting help="Hidden feature remove Order button">
+                        <field name="disable_remove_order"/>
+                    </setting>
+                    <setting help="Allow pos users create new customer from POS Screen">
+                        <field name="create_new_customer"/>
+                    </setting>
+                    <setting help="Disable edit/modify customer information">
+                        <field name="disable_edit_customer"/>
+                    </setting>
+                    <setting help="Default country when create new customer">
+                        <field name="create_new_customer_default_country_id"/>
+                    </setting>
+                    <setting help="Required Mobile when Create New Customer">
+                        <field name="customer_required_mobile"/>
+                    </setting>
+                    <setting help="Required Email when Create New Customer">
+                        <field name="customer_required_email"/>
+                    </setting>
+                    <setting help="Allow seller one time clear cart, remove all items in cart">
+                        <field name="clear_cart"/>
+                    </setting>
+                </block>
+                <block id="invoice_screen" title="Invoice Screen">
+                    <setting help="Allow customer set payment reference to each pos payment (cash/bank/...)">
+                        <field name="enable_set_payment_reference"/>
+                    </setting>
+                    <setting help="Allow cashier payment order with multi currency">
+                        <field name="enable_multi_currency"/>
+                    </setting>
+                    <setting help="Management Invoice">
+                        <field name="invoice_screen"/>
+                    </setting>
+                    <setting help="Allow register payment">
+                        <field name="invoice_register_payment"/>
+                    </setting>
+                    <setting help="Reset Invoice back to Draft">
+                        <field name="invoice_reset_to_draft"/>
+                    </setting>
+                    <setting help="Create Credit Note">
+                        <field name="invoice_credit_note"/>
+                    </setting>
+                    <setting help="Confirm and Post Invoice">
+                        <field name="invoice_confirm"/>
+                    </setting>
+                </block>
+                <block id="display" title="Display Features">
+                    <setting>
+                        <field name="auto_clear_searchbox"/>
+                    </setting>
+                    <setting>
+                        <field name="enable_minimize_menu"/>
+                    </setting>
+                    <setting help="Display of Products in Pos Screen, you can switch between card (box) or list view">
+                        <field name="products_display"/>
+                    </setting>
+                    <setting help="Update realtime change customers from backend to POS screen">
+                        <field name="logo"
+                               string="Receipt's Logo and POS App Logo"
+                               widget="image"
+                               class="oe_avatar"/>
+                    </setting>
+                    <setting help="Set Width of Order cart, default is 500px, you can set smaller or bigger than it">
+                        <field name="order_cart_width"/>
+                    </setting>
+                    <setting help="If any product have not POS Category, will hidden">
+                        <field name="products_display_only_categ"/>
+                    </setting>
+                    <setting>
+                        <field name="display_pads"/>
+                    </setting>
+                    <setting help="Numpad and Buttons Feature Position">
+                        <field name="numpad_position"/>
+                    </setting>
+                </block>
+                <block id="big_data"
+                       title="Big Datas - If start pos session need few minutes, you can active this feature">
+                    <setting
+                            help="This feature can help you start pos session with >= 500k products and >=500k customers only few seconds">
+                        <field name="index_db"/>
+                    </setting>
+                </block>
+                <block id="offline" title="Offline Mode">
+                    <setting help="Allow create new customer with offline mode (no need connected to odoo server) and save later when connection odoo back">
+                        <field name="offline_create_customer"/>
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>

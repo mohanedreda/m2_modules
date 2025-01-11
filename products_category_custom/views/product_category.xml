@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inherit the Product Category form view -->
+<!--    <record id="view_product_category_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">product.category.form.custom.inherit</field>-->
+<!--        <field name="model">product.category</field>-->
+<!--        <field name="inherit_id" ref="product.product_category_form_view"/>  &lt;!&ndash; Reference the original form view &ndash;&gt;-->
+<!--        <field name="arch" type="xml">-->
+<!--            &lt;!&ndash; Add a new tab after the Account Properties section &ndash;&gt;-->
+<!--            <xpath expr="//group[@name='account_property']" position="after">-->
+<!--                <notebook>-->
+<!--                    <page string="Custom Category">-->
+<!--                        <group>-->
+<!--                            <field name="custom_category_id"/>  &lt;!&ndash; Many2one field to custom.category &ndash;&gt;-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="custom_category_parent"/>-->
+<!--                            <field name="custom_category_child1"/>-->
+<!--                            <field name="custom_category_child2"/>-->
+<!--                            <field name="custom_category_child3"/>-->
+<!--                            <field name="custom_category_child4"/>-->
+<!--                            <field name="custom_category_child5"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </notebook>-->
+<!--            </xpath>-->
+<!--            &lt;!&ndash;            <xpath expr="//field[@name='avatax_category_id']" position="after">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <field name="code" string = "code"/>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <field name="selection_child"/>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="view_product_category_form_inheritance" model="ir.ui.view">
+        <field name="name">product.category.form.code.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add your fields after the parent_id field -->
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="code" string="Code"/>
+                <field name="selection_child" string="Selection Child"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

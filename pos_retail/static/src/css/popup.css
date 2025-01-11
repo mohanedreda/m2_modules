@@ -1,0 +1,42 @@
+.pos .popups .popup-create-sale-order {
+    max-width: 80% !important;
+}
+
+.pos .popups .popup-update-stock-onhand {
+    max-width: 65% !important;
+}
+
+.pos .popups .client-details-left {
+    float: left;
+    width: 45%;
+}
+
+.pos .popups .client-details-right {
+    width: 45%;
+    float: right;
+}
+
+.pos .popups  p {
+    text-align: left;
+    font-weight: 900;
+    border-bottom: 1px dotted gray;
+}
+.pos .popups .info-title {
+    font-weight: 500;
+    opacity: 0.66
+}
+.pos .modal-body {
+    display: flow-root;
+}
+.pos .popups .text-input {
+    height: 120px;
+    border: 1px dotted gray;
+}
+.pos .popups .notice {
+    font-weight: 900;
+    padding: 10px;
+}
+.pos .popups .modal-title {
+    font-weight: 900;
+    color: blue;
+}

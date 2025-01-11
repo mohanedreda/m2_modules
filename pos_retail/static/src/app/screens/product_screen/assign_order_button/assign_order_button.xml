@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.AssignOrderButton">
+        <button class="control-button o_pricelist_button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.click()" t-att-class="{highlight: isHighlighted}">
+            <i class="fa fa-trash me-1" role="img" aria-label="Assign Order to another POS Session" title="Assign Order to another POS Session" />
+            <span>Assign Order</span>
+            <span></span>
+        </button>
+    </t>
+
+</templates>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="booking_order_quotation_tree" model="ir.ui.view">
+            <field name="name">quotation.tree.retail.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="delivery_name" optional="hide"/>
+                    <field name="delivery_phone" optional="hide"/>
+                    <field name="delivery_date" optional="hide"/>
+                    <field name="delivery_address" optional="hide"/>
+                    <field name="delivered_date" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="booking_order_sale_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree.retail.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="delivery_name" optional="hide"/>
+                    <field name="delivery_phone" optional="hide"/>
+                    <field name="delivery_date" optional="hide"/>
+                    <field name="delivery_address" optional="hide"/>
+                    <field name="delivered_date" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="booking_order_sale_form" model="ir.ui.view">
+            <field name="name">sale.order.form.retail.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="POS Shipping Information" name="pos_shipping_information">
+                        <group>
+                            <group>
+                                <field name="payment_partial_amount"/>
+                                <field name="payment_partial_method_id"/>
+                            </group>
+                            <group>
+                                <field name="delivery_name"/>
+                                <field name="delivery_phone"/>
+                                <field name="delivery_address"/>
+                                <field name="delivered_date"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

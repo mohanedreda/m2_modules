@@ -1,0 +1,5 @@
+.orders:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    box-shadow: none;
+}

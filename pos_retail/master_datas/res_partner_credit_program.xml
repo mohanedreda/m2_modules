@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="onboarding_onboarding_step_company_data" model="res.partner.credit.program">
+            <field name="name">Credit Program</field>
+            <field name="rate">1.00</field>
+        </record>
+
+    </data>
+</odoo>

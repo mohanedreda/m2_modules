@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_session_management_form" model="ir.ui.view">
+            <field name="name">pos.session.management.form</field>
+            <field name="model">pos.session.management</field>
+            <field name="arch" type="xml">
+                <form string="Sessions Managements">
+                    <header>
+                        <button name="close_session"
+                                string="Close Session"
+                                invisible="state == 'closed'"
+                                type="object"
+                                groups="point_of_sale.group_pos_manager" class="btn-primary"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="session_id"/>
+                                <field name="opened_time"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="login_number"/>
+                                <field name="closed_user_id"/>
+                                <field name="closed_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_session_management_tree" model="ir.ui.view">
+            <field name="name">pos.session.management.tree</field>
+            <field name="model">pos.session.management</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions Managements" create="0" sample="1" decoration-info="state == 'opened'"
+                      decoration-muted="state == 'closed'">
+                    <field name="session_id"/>
+                    <field name="opened_time"/>
+                    <field name="user_id"/>
+                    <field name="login_number"/>
+                    <field name="closed_user_id"/>
+                    <field name="closed_time"/>
+                    <field name="state"/>
+                    <button name="close_session"
+                            string="Close Session"
+                            invisible="state == 'closed'"
+                            type="object"
+                            groups="point_of_sale.group_pos_manager" class="btn-primary"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_session_management_search" model="ir.ui.view">
+            <field name="name">pos.session.management.filter</field>
+            <field name="model">pos.session.management</field>
+            <field name="arch" type="xml">
+                <search string="Sessions Managements">
+                    <field name="session_id"/>
+                    <field name="config_id"/>
+                    <field name="opened_time"/>
+                    <field name="user_id"/>
+                    <field name="login_number"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Session" name="session" domain="[]" context="{'group_by': 'session_id'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_session_management">
+            <field name="name">Sessions Monitoring</field>
+            <field name="res_model">pos.session.management</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_pos_session_management_filtered" model="ir.actions.act_window">
+            <field name="name">Sessions Monitoring</field>
+            <field name="res_model">pos.session.management</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="pos_session_management_search"/>
+            <field name="context">{
+                'search_default_config_id': [active_id],
+                'default_config_id': active_id},
+                'search_default_state': 'opened'
+            </field>
+        </record>
+
+
+        <menuitem id="menu_action_pos_session_management"
+                  action="action_pos_session_management"
+                  parent="point_of_sale.menu_point_config_product"
+                  sequence="110"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.PartnerListScreen" t-inherit="point_of_sale.PartnerListScreen" t-inherit-mode="extension">
+        <xpath expr="//table[hasclass('partner-list')]//th[hasclass('pos-right-align')]" position="before">
+            <th class="partner-line-credit py-2" t-if="pos.config.credit_feature">Credit</th>
+        </xpath>
+        <xpath expr="//button[hasclass('new-customer')]" position="attributes">
+            <attribute name="t-if">!state.detailIsShown and pos.config.create_new_customer</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('btn-primary')]" position="attributes">
+            <attribute name="t-if">state.detailIsShown and !pos.config.disable_edit_customer</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('search-more-button')]" position="inside">
+            <button style="margin-left: 10px"
+                    t-if="!state.detailIsShown and pos.config.create_new_customer"
+                    class="btn btn-lg btn-primary"
+                    t-on-click="createPartner">
+                Create Customer with Mobile <t t-esc="state.query"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

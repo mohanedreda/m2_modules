@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.OrderWidget" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('order-container')]" position="after">
+            <li class="info orderline-note p-2 my-1 rounded text-bg-warning text-warning bg-opacity-25 text-break" t-if="this.currentOrder.note">
+                <i class="fa fa-sticky-note me-1" role="img" aria-label="Customer Note" title="Customer Note"/>
+                Order Notes: <t t-esc="this.currentOrder.note" />
+            </li>
+            <div class="signature_element" t-if="this.currentOrder.signature">
+                <span class="summary-label">Signature:</span>
+                <img class="product-img signature"
+                     t-att-src="this.currentOrder.get_signature() || ''"
+                     style="max-height:400px;max-width:200px"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('order-summary')]" position="replace"/>
+    </t>
+
+</templates>

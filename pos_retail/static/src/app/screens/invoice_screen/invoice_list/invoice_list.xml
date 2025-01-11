@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.InvoiceList">
+        <div class="orders overflow-y-auto">
+            <div class="header-row d-flex text-bg-700 fw-bolder" t-att-class="{ 'd-none': ui.isSmall }">
+                <div class="col name p-2">Number</div>
+                <div class="col date p-2">Invoice Date</div>
+                <div class="col customer p-2">Customer</div>
+                <div class="col total p-2">Total</div>
+                <div class="col total p-2">Due</div>
+                <div class="col state p-2">Status</div>
+                <div class="col state p-2">Payment</div>
+            </div>
+            <div class="order-list">
+                <t t-foreach="props.invoices" t-as="invoice" t-key="invoice.id">
+                    <InvoiceRow
+                        onClickInvoice.bind="props.onClickInvoice"
+                        invoice="invoice"
+                        highlightedInvoice="highlightedInvoice" />
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

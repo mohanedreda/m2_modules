@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ClearCartButton">
+        <div class="header-cart-button control-button o_pricelist_button btn btn-light rounded-0 fw-bolder"
+             t-on-click="() => this.click()"
+             t-if="currentOrder and currentOrder.orderlines.length > 0"
+             t-att-class="{highlight: isHighlighted}">
+            <i class="fa fa-trash me-1" role="img" aria-label="Clear items in cart" title="Clear items in cart" />
+            <span>Clear Cart</span>
+            <span></span>
+        </div>
+    </t>
+
+</templates>

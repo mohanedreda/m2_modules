@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Define the action to open your custom category form -->
+    <record id="action_fashion_segment_form" model="ir.actions.act_window">
+        <field name="name">segment</field>
+        <field name="res_model">product.segment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Define the tree view for Custom Categories -->
+    <record id="view_fashion_segment_tree" model="ir.ui.view">
+        <field name="name">product.segment.tree</field>
+        <field name="model">product.segment</field>
+        <field name="arch" type="xml">
+            <tree string="session">
+                <field name="segment"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Define the form view for Custom Categories -->
+    <record id="view_fashion_segment_form" model="ir.ui.view">
+        <field name="name">product.segment.form</field>
+        <field name="model">product.segment</field>
+        <field name="arch" type="xml">
+            <form string="session">
+                <sheet>
+                    <group>
+                        <field name="segment"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to link the tree and form views -->
+    <record id="action_fashion_segment_form" model="ir.actions.act_window">
+        <field name="name">segment</field>
+        <field name="res_model">product.segment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_custom_category_tree"/>
+    </record>
+
+    <!-- Inherit the stock configuration menu to add your custom menu item -->
+    <menuitem id="menu_fashion_segment"
+              name="product segment"
+              parent="stock.menu_stock_config_settings"
+              sequence="99"
+              action="action_fashion_segment_form"/>  <!-- Adjust groups as needed -->
+</odoo>

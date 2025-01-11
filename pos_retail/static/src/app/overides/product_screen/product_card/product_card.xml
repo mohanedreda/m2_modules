@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('price-tag')]" position="after">
+            <ProductOnHand productId="props.productId" t-if="_allowDisplayOnhand"/>
+        </xpath>
+        <xpath expr="//article" position="attributes">
+            <attribute name="t-if">pos.config.products_display == 'card'</attribute>
+        </xpath>
+        <xpath expr="//article" position="after">
+            <div class="order-row"
+                 t-if="pos.config.products_display == 'list'"
+                 t-on-keypress="(event) => event.which === 32 ? props.onClick(event) : ()=>{}"
+                 t-on-click="props.onClick"
+                 t-att-data-product-id="props.productId"
+                 t-attf-aria-labelledby="article_product_{{props.productId}}">
+                <div class="col name p-2">
+                    <button class="control-button btn btn-light rounded-0 fw-bolder" t-if="props.productInfo"
+                         t-on-click.stop="props.onProductInfoClick">
+                        <i class="fa fa-info" role="img" aria-label="Product Information"
+                           title="Product Information"/>
+                    </button>
+                    <div class="product-img">
+                        <img class="w-100" t-if="props.imageUrl" t-att-src="props.imageUrl" t-att-alt="props.name"/>
+                        <span class="overflow-hidden lh-sm fw-bolder product-name"
+                              t-att-class="{'no-image': !props.imageUrl}"
+                              t-attf-id="article_product_{{props.productId}}"
+                              t-esc="props.name"/>
+                    </div>
+                </div>
+                <div class="col p-2">
+                    <t t-esc="pos.db.product_by_id[props.productId]['default_code'] or 'N/A'"/>
+                </div>
+                <div class="col p-2">
+                    <t t-esc="pos.db.product_by_id[props.productId]['barcode'] or 'N/A'"/>
+                </div>
+                <div class="col p-2">
+                    <ProductOnHand productId="props.productId" t-if="_allowDisplayOnhand"/>
+                    <div class="product-content d-flex flex-column justify-content-between h-100 mx-2 py-1">
+                        <span t-if="props.price" class="price-tag text-primary py-1 fw-bolder"
+                              t-esc="props.price"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

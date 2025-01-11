@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.SignaturePopup">
+        <div class="popup">
+            <div class="modal-header">
+                <h4 class="modal-title"><t t-esc="props.title" /></h4>
+            </div>
+            <main class="modal-body">
+                <div class="opening-cash-section mb-3">
+                    <span class="info-title d-flex flex-grow-1 align-items-start">Signature</span>
+                    <div class="cash-input-sub-section text-input" t-ref="signature-div" name="signature"
+                         t-on-change="OnChange"/>
+                </div>
+            </main>
+            <t t-if="orderUiState.isSuccessful !== null">
+                <div class="notice mt-2"
+                     t-attf-class="{{ orderUiState.isSuccessful ? 'successful text-success' : 'failed text-danger' }}">
+                    <t t-esc="orderUiState.hasNotice"></t>
+                </div>
+            </t>
+            <footer class="footer cash-move modal-footer">
+                <div class="button confirm highlight btn btn-lg btn-primary" t-on-click="action_confirm">
+                    <t t-esc="props.confirmText"/>
+                </div>
+                <div class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                    <t t-esc="props.cancelText"/>
+                </div>
+            </footer>
+        </div>
+    </t>
+
+</templates>

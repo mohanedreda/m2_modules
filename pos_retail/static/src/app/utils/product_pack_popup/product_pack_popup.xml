@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ProductPackPopup">
+        <div class="popup popup-text popup-med combo-configurator-popup">
+            <header class="modal-header h2" t-esc="props.product.display_name"/>
+            <main class="body">
+                <div t-foreach="props.product.pack_group_ids" t-as="group_id" t-key="group_id"
+                     class="d-flex flex-column m-3 mb-4">
+                    <t t-set="group" t-value="pos.product_pack_group_by_id[group_id]"/>
+                    <h3 class="me-auto mb-3" t-esc="group.name"/>
+                    <div class="product-list d-grid gap-1">
+                        <t t-set="pack_items" t-value="pos.pack_items_by_group_id[group_id]"/>
+                        <div t-foreach="pack_items" t-as="pack_item" t-key="pack_item.id">
+                            <t t-set="product" t-value="pos.db.product_by_id[pack_item.product_id[0]]"/>
+                            <input
+                                type="checkbox"
+                                t-attf-name="pack-item-{{pack_item['product_id'][1]}}"
+                                t-attf-id="pack-item-{{pack_item.id}}"
+                                t-attf-value="{{pack_item.id}}"
+                                t-model="state.pack_items[pack_item.id]"
+                                t-att-checked="state.pack_items[pack_item.id] != '0' ? 'checked': ''"
+                                t-on-change="(ev) => this.onChangeCheckbox(ev, pack_item.id)"
+                                />
+                            <label t-attf-for="pack-item-{{pack_item.id}}" class="combo-line h-100 w-100 rounded cursor-pointer transition-base">
+                                <ProductBox
+                                    class="'flex-column h-100 border'"
+                                    name="product.display_name"
+                                    productId="product.id"
+                                    price="formattedPrice(pack_item['sale_price'])"
+                                    imageUrl="product.getImageUrl()"
+                                    onClick="() => {}"
+                                />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="footer footer-flex modal-footer">
+                <t t-set="_allSelected" t-value="areAllCombosSelected()"/>
+                <button class="button highlight confirm btn btn-lg btn-primary"
+                        t-att-disabled="!_allSelected"
+                        t-on-click="confirm">
+                        Add to order
+                </button>
+                <button class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                        Discard
+                </button>
+                <div class="ms-auto">
+                    <!-- TODO: Restore the feature the shows the price of the selection. -->
+                    <t t-if="!_allSelected">
+                        Complete the selection to proceed
+                    </t>
+                </div>
+            </footer>
+        </div>
+    </t>
+</templates>

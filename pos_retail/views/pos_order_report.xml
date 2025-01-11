@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_report_pos_order_search" model="ir.ui.view">
+        <field name="name">report.pos.order.search</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
+        <field name="model">report.pos.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_categ_id']" position="after">
+                <field name="pos_branch_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='order_month']" position="after">
+                <filter string="Branch/Store" name="pos_branch_id" context="{'group_by':'pos_branch_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

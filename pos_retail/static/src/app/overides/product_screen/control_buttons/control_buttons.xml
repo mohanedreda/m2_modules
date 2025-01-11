@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ControlButtonPopup" t-inherit="point_of_sale.ControlButtonPopup" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('control-buttons')]" position="attributes">
+            <attribute name="class">control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300</attribute>
+        </xpath>
+
+    </t>
+
+</templates>

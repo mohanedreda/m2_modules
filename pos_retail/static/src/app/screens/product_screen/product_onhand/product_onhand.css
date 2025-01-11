@@ -1,0 +1,45 @@
+.pos .qty_available {
+    background: #fff;
+    padding: 3px;
+    border-radius: 5px;
+    min-height: 14px;
+    text-align: left;
+    width: 100%;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.pos .low-stock {
+    color: black !important;
+    background: darkgray;
+    text-align: center;
+    max-width: 50px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.pos .normal-stock {
+    color: blue !important;
+    background: darkgray;
+    text-align: center;
+    max-width: 50px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.pos .out-of-stock {
+    color: red !important;
+    background: darkgray;
+    text-align: center;
+    max-width: 50px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.pos .qty_available .notification {
+    padding: 4px;
+    background: #6EC89B;
+    color: #fff;
+}

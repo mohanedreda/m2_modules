@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_partner_category_form" model="ir.ui.view">
+        <field name="name">res.partner.category.retail</field>
+        <field name="model">res.partner.category</field>
+        <field name="inherit_id" ref="base.view_partner_category_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="before">
+                <field name="pos_discount"/>
+                <field name="pos_discount_categ_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_action_partner_category_form"
+              action="base.action_partner_category_form"
+              parent="point_of_sale.menu_point_config_product"
+              name="Discount Customer Group"
+              sequence="110"
+    />
+
+</odoo>

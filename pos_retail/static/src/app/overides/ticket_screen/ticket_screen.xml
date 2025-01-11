@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.TicketScreen" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('delete-button')]" position="replace">
+            <button t-if="!shouldHideDeleteButton(order)"
+                 t-att-disabled="pos.config.disable_remove_order"
+                 class="col very-narrow delete-button p-2"
+                 name="delete"
+                 t-on-click.stop="() => this.onDeleteOrder(order)">
+                <i class="fa fa-trash" aria-hidden="true"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

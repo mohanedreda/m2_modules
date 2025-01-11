@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_query_log_form" model="ir.ui.view">
+            <field name="name">pos.query.log.form</field>
+            <field name="model">pos.query.log</field>
+            <field name="arch" type="xml">
+                <form string="Log">
+                    <header>
+                        <button name="refresh_logs"
+                                string="Refresh Data"
+                                type="object"
+                                groups="point_of_sale.group_pos_manager" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="min_id"/>
+                                <field name="max_id"/>
+                                <field name="call_model"/>
+                            </group>
+                            <group>
+                                <field name="call_results"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_query_log_tree" model="ir.ui.view">
+            <field name="name">pos.query.log.tree</field>
+            <field name="model">pos.query.log</field>
+            <field name="arch" type="xml">
+                <tree string="Logs">
+                    <field name="min_id"/>
+                    <field name="max_id"/>
+                    <field name="call_model"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_query_log_search" model="ir.ui.view">
+            <field name="name">pos.query.log.filter</field>
+            <field name="model">pos.query.log</field>
+            <field name="arch" type="xml">
+                <search string="Logs">
+                    <field name="call_model"/>
+                    <field name="min_id"/>
+                    <field name="max_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_query_log">
+            <field name="name">POS Query Log</field>
+            <field name="res_model">pos.query.log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_query_log"
+                  action="action_pos_query_log"
+                  parent="point_of_sale.menu_point_config_product"
+                  sequence="100"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="pos_indexdb_assets_index" name="pos_indexdb assets_index" inherit_id="point_of_sale.index">
+        <xpath expr="//head" position="inside">
+            <script type="text/javascript">
+                var odoo =<t t-out="json.dumps({
+                    'session_info': session_info,
+                    'csrf_token': request.csrf_token(None),
+                    '__session_info__': session_info,
+                    'login_number': login_number,
+                    'pos_session_id': pos_session_id,
+                    'debug': debug,
+                })"/>;
+            </script>
+        </xpath>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.PrintBillButton">
+        <button class="control-button o_pricelist_button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.click()" t-att-class="{highlight: isHighlighted}">
+            <i class="fa fa-print me-1" role="img" aria-label="Print Draft Bill" title="Print Draft Bill" />
+            <span>Draft Bill</span>
+            <span></span>
+        </button>
+    </t>
+
+</templates>

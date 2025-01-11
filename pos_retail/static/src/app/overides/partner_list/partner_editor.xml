@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details-box')]" position="inside">
+            <div class="partner-detail col" t-if="pos.config.credit_feature and props.partner and props.partner.balance">
+                <label class="label form-label credit-gestion">Credit points</label>
+                <input type="text" class="form-control" t-att-placeholder="env.utils.formatCurrency(props.partner.balance)" disabled="disabled"/>
+            </div>
+        </xpath>
+        <xpath expr="//select[@id='country']//option" position="replace">
+            <select class="detail form-select" id="country" name="country_id" t-model="changes.country_id" t-att-class="{'border-danger': missingFields.includes('country_id')}" t-if="pos.countries">
+                <option value="">None</option>
+                <t t-foreach="pos.countries" t-as="country" t-key="country.id">
+                    <option t-att-value="country.id" t-att-selected="pos.config.create_new_customer_default_country_id and country.id === pos.config.create_new_customer_default_country_id[0] ? true : undefined">
+                        <t t-esc="country.name" />
+                    </option>
+                </t>
+            </select>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//CashierName" position="before">
+            <GoInvoiceScreenButton t-if="pos.config.invoice_screen and !pos.pos_session.is_locked"/>
+            <RemoveIndexDatabaseButton t-if="pos.config.index_db and !pos.pos_session.is_locked"/>
+            <LockScreenButton t-if="pos.config.lock_session"/>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-branding')]" position="after">
+            <DisplayCounterButton t-if="!pos.pos_session.is_locked"/>
+        </xpath>
+        <xpath expr="//li[hasclass('menu-item')]" position="attributes">
+            <attribute name="t-if">!pos.pos_session.is_locked</attribute>
+        </xpath>
+    </t>
+
+</templates>

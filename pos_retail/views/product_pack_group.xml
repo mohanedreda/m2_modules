@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_pack_group_form" model="ir.ui.view">
+            <field name="name">product.pack.group.form</field>
+            <field name="model">product.pack.group</field>
+            <field name="arch" type="xml">
+                <form string="Product Pack Group">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="max_qty_selected"/>
+                            </group>
+                        </group>
+                        <field name="item_ids" colspan="4" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="lst_price"/>
+                                <field name="extra_price"/>
+                                <field name="extra_discount"/>
+                                <field name="sale_price"/>
+                                <field name="default_selected"/>
+                                <field name="default_required"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_pack_group_tree" model="ir.ui.view">
+            <field name="name">product.pack.group.tree</field>
+            <field name="model">product.pack.group</field>
+            <field name="arch" type="xml">
+                <tree string="Product Pack Group">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_pack_group_search" model="ir.ui.view">
+            <field name="name">product.pack.group.filter</field>
+            <field name="model">product.pack.group</field>
+            <field name="arch" type="xml">
+                <search string="Product Pack Group">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_pack_group">
+            <field name="name">Product Pack Group</field>
+            <field name="res_model">product.pack.group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_product_pack_group"
+                  action="action_product_pack_group"
+                  parent="point_of_sale.pos_config_menu_catalog"
+                  sequence="140"
+        />
+
+    </data>
+</odoo>

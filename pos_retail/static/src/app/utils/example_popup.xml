@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!--    <t t-name="pos_retail.ExamplePopup">-->
+<!--        <div class="popup popup-create-sale-order">-->
+<!--            <div class="modal-header">-->
+<!--                <h4 class="modal-title"><t t-esc="props.title" /></h4>-->
+<!--            </div>-->
+<!--            <main class="modal-body">-->
+<!--                <div class="client-details-left">-->
+
+<!--                </div>-->
+<!--                <div class="client-details-right">-->
+
+<!--                </div>-->
+<!--            </main>-->
+<!--            <t t-if="orderUiState.isSuccessful !== null">-->
+
+<!--            </t>-->
+<!--            <footer class="footer cash-move modal-footer">-->
+<!--                <div class="button confirm highlight btn btn-lg btn-primary" t-on-click="action_confirm">-->
+<!--                    <t t-esc="props.confirmText"/>-->
+<!--                </div>-->
+<!--                <div class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">-->
+<!--                    <t t-esc="props.cancelText"/>-->
+<!--                </div>-->
+<!--            </footer>-->
+<!--        </div>-->
+<!--    </t>-->
+
+</templates>

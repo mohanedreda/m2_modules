@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//img" position="replace">
+            <t t-if="pos.config.logo">
+                <img class="pos-logo h-75 ms-3 me-auto align-self-center"
+                     t-on-click="() => debug.toggleWidget()"
+                     t-att-src="'data:image/png;base64,' + pos.config.logo"
+                     alt="Logo" />
+            </t>
+            <t t-else="">
+                <img class="pos-logo h-75 ms-3 me-auto align-self-center"
+                     t-on-click="() => debug.toggleWidget()"
+                     src="/web/static/img/logo.png" alt="Logo" />
+            </t>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.SetCustomerButton">
+        <div class="header-cart-button control-button o_pricelist_button btn btn-light rounded-0 fw-bolder"
+             t-on-click="() => this.pos.selectPartner()"
+             t-att-class="{highlight: isHighlighted}"
+             t-att-disabled="pos.config.disable_set_customer">
+            <i class="fa fa-user" role="img" aria-label="Clear items in cart" title="Set Customer" />
+            <div class="actionpad d-flex flex-column flex-grow-1 p-0">
+                <span t-if="this.currentCustomer" class="text-truncate fw-bolder text-action">
+                    <t t-esc="this.currentCustomer.name"/>
+                </span>
+                <span t-else="fw-bolder">
+                    Set Customer
+                </span>
+            </div>
+        </div>
+    </t>
+
+</templates>

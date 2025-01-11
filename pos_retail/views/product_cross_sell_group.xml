@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_cross_sell_group_form" model="ir.ui.view">
+            <field name="name">product.cross.sell.group.form</field>
+            <field name="model">product.cross.sell.group</field>
+            <field name="arch" type="xml">
+                <form string="Product Cross Sell Group">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="product_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_cross_sell_group_tree" model="ir.ui.view">
+            <field name="name">product.cross.sell.group.tree</field>
+            <field name="model">product.cross.sell.group</field>
+            <field name="arch" type="xml">
+                <tree string="Product Cross Sell Group">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_cross_sell_group_search" model="ir.ui.view">
+            <field name="name">product.cross.sell.group.filter</field>
+            <field name="model">product.cross.sell.group</field>
+            <field name="arch" type="xml">
+                <search string="Product Cross Sell Group">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_cross_sell_group">
+            <field name="name">Product Cross Sell Group</field>
+            <field name="res_model">product.cross.sell.group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_product_cross_sell_group"
+                  action="action_product_cross_sell_group"
+                  parent="point_of_sale.pos_config_menu_catalog"
+                  sequence="130"
+        />
+
+    </data>
+</odoo>

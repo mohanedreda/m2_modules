@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.PartnerLine" t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <xpath expr="//td[hasclass('partner-line-balance')]" position="before">
+            <td class="partner-line-credit" t-if="pos.config.credit_feature">
+                <button class="edit-partner-button btn btn-light border" t-on-click.stop="() => this.reChargeCredit()">
+                    Add credit
+                    <t t-esc="env.utils.formatCurrency(props.partner.balance or 0)" />
+                </button>
+            </td>
+        </xpath>
+    </t>
+
+</templates>

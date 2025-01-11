@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//ul[hasclass('info-list')]/li[1]" position="inside">
+            <div class="w-10 d-flex flex-column align-items-center gap-2 justify-content-between mt-1"
+                 style="float: right" t-if="!props.receipt">
+                <div class="d-flex gap-2 justify-content-center align-items-center w-100">
+                    <!-- Decrement Button -->
+                    <button type="button"
+                            t-on-click="() => this.selectedOrderline.set_quantity(this.selectedOrderline.quantity - 1)"
+                            class="btn btn-secondary rounded"> - </button>
+
+                    <!-- Increment Button -->
+                    <button type="button"
+                            t-on-click="() => this.selectedOrderline.set_quantity(this.selectedOrderline.quantity + 1)"
+                            class="btn btn-secondary rounded"> + </button>
+
+                <button t-if="!pos.config.disable_remove_line" type="button" class="btn btn-danger rounded"
+                        t-on-click="() => this.currentOrder.removeOrderline(this.selectedOrderline)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </xpath>
+    <xpath expr="//li[hasclass('price-per-unit')]" position="after">
+            <li t-if="line.extra_discount and line.extra_discount !== '0'">
+                With a <em><t t-esc="line.extra_discount" />% </em>
+                extra discount
+            </li>
+        </xpath>
+    <xpath expr="//li[hasclass('orderline')]" position="attributes">
+             <attribute name="t-attf-class">{{ line.comboParent or line.cross_sell ? 'border-start border-3 ms-4' : '' }}</attribute>
+         </xpath>
+    </t>
+
+        </templates>

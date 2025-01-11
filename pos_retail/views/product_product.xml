@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field name="name">product.product.form.pos_retail.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='packaging']" position="after">
+                <group>
+                    <field name="is_credit"/>
+                    <field name="cross_sell"/>
+                    <field name="pack_include"/>
+                </group>
+                <group name="cross_sale" invisible="cross_sell == True" string="Cross Sale"
+                       groups="point_of_sale.group_pos_manager">
+                    <field name="cross_sell_group_ids" widget="many2many_tags"/>
+                    <field name="cross_sell_item_ids" widget="many2many_tags"/>
+                </group>
+                <group name="pack_include" invisible="pack_include == False" string="Combo/Pack Group">
+                    <field name="pack_group_ids" widget="many2many_tags"/>
+                </group>
+                <group name="barcodes" string="Multi Barcode" groups="point_of_sale.group_pos_manager">
+                    <field name="product_barcode_ids" widget="one2many_list" nolabel="1" colspan="2">
+                        <tree string="Multi Barcode" editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </group>
+                <group name="product_units" string="Multi Unit" groups="point_of_sale.group_pos_manager">
+                    <field name="product_unit_ids" widget="one2many_list" nolabel="1" colspan="2">
+                        <tree string="Multi Unit" editable="bottom">
+                            <field name="uom_id"/>
+                            <field name="price"/>
+                        </tree>
+                    </field>
+                </group>
+                <group name="multi_unit_of_measure"
+                       string="Multi Unit of Measure"
+                       groups="point_of_sale.group_pos_manager">
+                    <field name="uom_ids" invisible="True"/>
+                    <field name="product_unit_ids" colspan="2" nolabel="1">
+                        <tree string="Unit of measure and price" editable="1">
+                            <field name="uom_id" domain="[('id', 'in', parent.uom_ids)]"/>
+                            <field name="price"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+        <field name="name">product.product.search.pos_retail.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" string="Product"
+                       filter_domain="['|', '|', '|', '|',('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self), ('product_barcode_ids', 'ilike', self)]"/>
+                <field name="product_barcode_ids" string="Multi Barcodes"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form.pos_retail.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page name="point_of_sale" string="Point Of Sale" groups="point_of_sale.group_pos_manager">>
+                    <group>
+                        <field name="is_credit"/>
+                        <field name="cross_sell"/>
+                        <field name="pack_include"/>
+                    </group>
+                    <group name="cross_sale" invisible="cross_sell == True" string="Cross Sale">
+                        <field name="cross_sell_group_ids" widget="many2many_tags"/>
+                        <field name="cross_sell_item_ids" widget="many2many_tags"/>
+                    </group>
+                    <group name="pack_include" invisible="pack_include == False" string="Combo/Pack Group">
+                        <field name="pack_group_ids" widget="many2many_tags"/>
+                    </group>
+                    <group name="suggest_products" string="Products sale suggestion">
+                        <field name="suggest_product_ids" widget="many2many_tags" nolabel="1"/>
+                    </group>
+                    <group name="barcodes" string="Multi Barcode">
+                        <field name="product_barcode_ids" widget="one2many_list" nolabel="1" colspan="2">
+                            <tree string="Multi Barcode" editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="multi_unit_of_measure" string="Multi Unit of Measure">
+                        <field name="uom_ids" invisible="True"/>
+                        <field name="product_unit_ids" colspan="2" nolabel="1">
+                            <tree string="Unit of measure and price" editable="1">
+                                <field name="uom_id" domain="[('id', 'in', parent.uom_ids)]"/>
+                                <field name="price"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

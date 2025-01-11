@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pads')]" position="replace"/>
+        <xpath expr="//div[hasclass('leftpane')]" position="before">
+            <div class="pads border-top" t-if="pos.config.numpad_position == 'left' and pos.config.display_pads and !ui.isSmall" style="max-width: 400px">
+                <div class="flex-buttons control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300"
+                    t-if="!ui.isSmall and !pos.config.enable_minimize_menu">
+                    <t t-foreach="controlButtons" t-as="cb" t-key="cb.name">
+                        <t t-component="cb.component" t-key="cb.name"/>
+                    </t>
+                </div>
+                <div class="subpads d-flex subpads-custom">
+                    <ActionpadWidget
+                        partner="partner"
+                        actionName="constructor.numpadActionName"
+                        actionType="'payment'"
+                        onClickMore.bind="displayAllControlPopup" />
+                    <Numpad buttons="getNumpadButtons()" onClick.bind="onNumpadClick" class="'w-100'"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('rightpane')]" position="after">
+            <div class="pads border-top" t-if="pos.config.numpad_position == 'right' and pos.config.display_pads and !ui.isSmall" style="max-width: 400px">
+                <div class="flex-buttons control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300"
+                    t-if="!ui.isSmall and !pos.config.enable_minimize_menu">
+                    <t t-foreach="controlButtons" t-as="cb" t-key="cb.name">
+                        <t t-component="cb.component" t-key="cb.name"/>
+                    </t>
+                </div>
+                <div class="subpads d-flex subpads-custom">
+                    <ActionpadWidget
+                        partner="partner"
+                        actionName="constructor.numpadActionName"
+                        actionType="'payment'"
+                        onClickMore.bind="displayAllControlPopup" />
+                    <Numpad buttons="getNumpadButtons()" onClick.bind="onNumpadClick" class="'w-100'"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('rightpane')]" position="before">
+            <div class="pads border-top" t-if="pos.config.numpad_position == 'center' and pos.config.display_pads and !ui.isSmall" style="max-width: 400px">
+                <div class="flex-buttons control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300"
+                    t-if="!ui.isSmall and !pos.config.enable_minimize_menu">
+                    <t t-foreach="controlButtons" t-as="cb" t-key="cb.name">
+                        <t t-component="cb.component" t-key="cb.name"/>
+                    </t>
+                </div>
+                <div class="subpads d-flex subpads-custom">
+                    <ActionpadWidget
+                        partner="partner"
+                        actionName="constructor.numpadActionName"
+                        actionType="'payment'"
+                        onClickMore.bind="displayAllControlPopup" />
+                    <Numpad buttons="getNumpadButtons()" onClick.bind="onNumpadClick" class="'w-100'"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//OrderWidget" position="after">
+            <div class="pads border-top" t-if="(pos.config.numpad_position == 'inside_cart' or ui.isSmall or !pos.config.numpad_position) and pos.config.display_pads">
+                <div class="control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300"
+                    t-if="!ui.isSmall and !pos.config.enable_minimize_menu">
+                    <t t-foreach="controlButtons" t-as="cb" t-key="cb.name">
+                        <t t-component="cb.component" t-key="cb.name"/>
+                    </t>
+                </div>
+                <div class="subpads d-flex">
+                    <ActionpadWidget
+                        partner="partner"
+                        actionName="constructor.numpadActionName"
+                        actionType="'payment'"
+                        onClickMore.bind="displayAllControlPopup" />
+                    <Numpad buttons="getNumpadButtons()" onClick.bind="onNumpadClick" class="'w-100'"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//Orderline/t" position="replace">
+            <t t-set-slot="product-name">
+                <i t-if="['serial', 'lot'].includes(line.product.tracking) and (pos.picking_type.use_create_lots || pos.picking_type.use_existing_lots)"
+                   t-on-click.stop="() => line.editPackLotLines()" role="img"
+                   t-attf-class="{{ line.has_valid_product_lot() ? 'text-success' : 'text-danger'}} fa fa-list line-lot-icon ms-1"
+                   t-attf-title="{{ line.has_valid_product_lot() ? 'Valid product lot' : 'Invalid product lot'}}"/>
+            </t>
+        </xpath>
+        <xpath expr="//OrderWidget" position="before">
+            <div class="control-buttons d-flex flex-wrap border-bottom overflow-hidden bg-300"
+                 style="min-height: 35px">
+                <ClearCartButton t-if="pos.config.clear_cart"/>
+                <SetCustomerButton/>
+                <NewOrderButton/>
+            </div>
+        </xpath>
+<!--        <xpath expr="//div[hasclass('pads')]" position="before">-->
+<!--            <button class="o_toggle_fold btn p-0 flex-shrink-0 text-center"-->
+<!--                    t-if="!ui.isSmall and pos.config.numpad_position == 'inside_cart'"-->
+<!--                    style="height: 30px"-->
+<!--                    t-on-click="() => this.showHideNumpad()">-->
+<!--                <i class="fa"-->
+<!--                   style="font-weight: 900;font-size: 30px;color: #d44c59;"-->
+<!--                   t-att-class="{-->
+<!--                        'fa-caret-down' : pos.config.display_pads,-->
+<!--                        'fa-caret-up ms-1': !pos.config.display_pads-->
+<!--                    }"-->
+<!--                />-->
+<!--            </button>-->
+<!--            <div class="subpads d-flex" t-if="!pos.config.display_pads">-->
+<!--                <ActionpadWidget-->
+<!--                        partner="partner"-->
+<!--                        actionName="constructor.numpadActionName"-->
+<!--                        actionType="'payment'"-->
+<!--                        onClickMore.bind="displayAllControlPopup"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+        <xpath expr="//div[hasclass('leftpane')]" position="attributes">
+            <attribute name="t-att-style">getStyleLeftPane</attribute>
+        </xpath>
+    </t>
+
+</templates>

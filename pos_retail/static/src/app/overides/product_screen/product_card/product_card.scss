@@ -1,0 +1,23 @@
+.order-row .product-img img {
+  height: 50px;
+  max-width: 50px !important;
+  border-radius: 30px;
+}
+
+.order-row .product-img {
+  display: inline;
+  margin-left: 10px;
+}
+.order-row .price-tag {
+  color: blue !important;
+  text-align: right;
+}
+
+.order-row .product-name {
+  padding-left: 10px;
+}
+
+.order-row .control-button {
+  background: none;
+  border: none;
+}

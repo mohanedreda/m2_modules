@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.SaveOrderToDraftButton">
+        <button class="control-button o_pricelist_button btn btn-light rounded-0 fw-bolder"
+             t-on-click="() => this.click()"
+             t-att-class="{highlight: isHighlighted}">
+            <i class="fa fa-save me-1" role="img" aria-label="Save Order to Draft/Quotation" title="Save Order to Draft/Quotation" />
+            <span>Pre-Order</span>
+        </button>
+    </t>
+
+</templates>

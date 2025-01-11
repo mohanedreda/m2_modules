@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_retail.SetInvoiceButton">
+        <button class="control-button o_sale_order_button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.click()">
+            <i class="fa fa-money me-1" role="img" aria-label="Invoice Screen"
+               title="Invoice Screen" />
+            <span>Invoices</span>
+        </button>
+    </t>
+
+</templates>
