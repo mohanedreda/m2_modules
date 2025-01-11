@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "categories of products",
+    'name': "internal of products",
     'version': '1.0',
-    'sequence': -200,
+    'sequence': -50,
 
     # any module necessary for this one to work correctly
     'depends': ['account', 'base', 'stock', 'product'],

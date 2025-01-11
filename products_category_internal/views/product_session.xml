@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Define the action to open your custom session form -->
+
+    <!-- Define the tree view for Custom Sessions -->
+    <record id="view_custom_session_tree" model="ir.ui.view">
+        <field name="name">sessions.sessions.tree</field>
+        <field name="model">sessions.sessions</field>
+        <field name="arch" type="xml">
+            <tree string="Sessions">
+                <field name="session"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Define the form view for Custom Sessions -->
+    <record id="view_custom_session_form" model="ir.ui.view">
+        <field name="name">sessions.sessions.form</field>
+        <field name="model">sessions.sessions</field>
+        <field name="arch" type="xml">
+            <form string="Session">
+                <sheet>
+                    <group>
+                        <field name="session"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_custom_session_form" model="ir.actions.act_window">
+        <field name="name">session</field>
+        <field name="res_model">sessions.sessions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Inherit the stock configuration menu to add your custom menu item -->
+    <menuitem id="menu_custom_session"
+              name="Session"
+              parent="stock.menu_stock_config_settings"
+              sequence="65"
+              action="action_custom_session_form"/>
+</odoo>

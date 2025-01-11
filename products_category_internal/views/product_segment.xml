@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Define the action to open your custom category form -->
+
+    <!-- Define the tree view for Custom Categories -->
+    <record id="view_fashiona_segment_tree" model="ir.ui.view">
+        <field name="name">product.segments.tree</field>
+        <field name="model">product.segments</field>
+        <field name="arch" type="xml">
+            <tree string="segment">
+                <field name="segment"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Define the form view for Custom Categories -->
+    <record id="view_fashion_segments_form" model="ir.ui.view">
+        <field name="name">product.segments.form</field>
+        <field name="model">product.segments</field>
+        <field name="arch" type="xml">
+            <form string="segment">
+                <sheet>
+                    <group>
+                        <field name="segment"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_fashion_segment" model="ir.actions.act_window">
+        <field name="name">segments</field>
+        <field name="res_model">product.segments</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Inherit the stock configuration menu to add your custom menu item -->
+    <menuitem id="menu_fashion_segment"
+              name="product segment"
+              parent="stock.menu_stock_config_settings"
+              sequence="100"
+              action="action_fashion_segment"/>  <!-- Adjust groups as needed -->
+</odoo>
