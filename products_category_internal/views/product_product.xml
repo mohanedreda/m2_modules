@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_product_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.form.custom.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add the custom full category path field after categ_id -->
+            <xpath expr="//page[@name='invoicing']" position="after">
+                <page string="Creation">
+                    <group>
+                        <group>
+                            <field string="Branding" name="branding_category"/>
+                            <field string="session" name="custom_session_id"/>
+                            <field name="product_specifications"/>
+
+                            <!--                            <field name="checklist"/>-->
+                            <!--                            <field name="selection" invisible="checklist == False"/>-->
+                        </group>
+                        <group>
+                            <field name="fashion_segments"/>
+                            <field name="product_types"/>
+                            <!--                            <field name="code"/>-->
+
+                            <!--                            <field name="year"/>-->
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="product_code"/>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,18 @@
+<odoo>
+    <record id="barcode_update_script" model="ir.actions.server">
+        <field name="name">Update Barcodes</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+            env['product.template'].trigger_update_codes()
+        </field>
+    </record>
+    <record id="barcode_update_script_barcode" model="ir.actions.server">
+        <field name="name">Update Barcodes variants</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="state">code</field>
+        <field name="code">
+            env['product.product'].trigger_update_code()
+        </field>
+    </record>
+</odoo>

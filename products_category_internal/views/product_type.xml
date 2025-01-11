@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Define the action to open your custom category form -->
+    <record id="action_product_type_form" model="ir.actions.act_window">
+        <field name="name">Product Types</field>
+        <field name="res_model">product.types</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Define the tree view for Custom Categories -->
+    <record id="view_product_type_tree" model="ir.ui.view">
+        <field name="name">product.types.tree</field>
+        <field name="model">product.types</field>
+        <field name="arch" type="xml">
+            <tree string="Type">
+                <field name="type"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Define the form view for Custom Categories -->
+    <record id="view_product_type_form" model="ir.ui.view">
+        <field name="name">product.types.form</field>
+        <field name="model">product.types</field>
+        <field name="arch" type="xml">
+            <form string="Type">
+                <sheet>
+                    <group>
+                        <field name="type"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to link the tree and form views -->
+    <record id="action_product_type_form" model="ir.actions.act_window">
+        <field name="name">product type</field>
+        <field name="res_model">product.types</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_product_type_tree"/>
+    </record>
+
+    <!-- Inherit the stock configuration menu to add your custom menu item -->
+    <menuitem id="menu_product_type"
+              name="Product Type"
+              parent="stock.menu_stock_config_settings"
+              sequence="90"
+              action="action_product_type_form"/>  <!-- Adjust groups as needed -->
+</odoo>
