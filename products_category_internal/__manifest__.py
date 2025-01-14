@@ -15,7 +15,7 @@
         'views/product_template.xml',
         'views/barcode_script.xml',
         'views/product_session.xml',
-        'views/product_product.xml',
+        # 'views/product_product.xml',
         'views/product_type.xml',
         'views/product_specification.xml',
         'views/product_segment.xml',
