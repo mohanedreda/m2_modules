@@ -1,14 +1,14 @@
 /** @odoo-module **/
 
-import { InventoryReportListView } from "@stock/views/list/inventory_report_list_view"
-import { InventoryReportListController } from "@stock/views/list/inventory_report_list_controller";
-import { useService } from "@web/core/utils/hooks";
-import { _t } from "@web/core/l10n/translation";
-import { onWillStart, useRef, markup } from "@odoo/owl";
-import { browser } from "@web/core/browser/browser";
-import { debounce } from "@web/core/utils/timing";
-import { AutoCloseDialog } from "./sh_dialog_auto_close";
-import { escape } from "@web/core/utils/strings";
+import {InventoryReportListView} from "@stock/views/list/inventory_report_list_view"
+import {InventoryReportListController} from "@stock/views/list/inventory_report_list_controller";
+import {useService} from "@web/core/utils/hooks";
+import {_t} from "@web/core/l10n/translation";
+import {onWillStart, useRef, markup} from "@odoo/owl";
+import {browser} from "@web/core/browser/browser";
+import {debounce} from "@web/core/utils/timing";
+import {AutoCloseDialog} from "./sh_dialog_auto_close";
+import {escape} from "@web/core/utils/strings";
 
 class InventoryAdjustmentBarcodeScannerListController extends InventoryReportListController {
     setup() {
@@ -19,6 +19,7 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
         onWillStart(this.willStart);
         this.debouncedChangeStockBarcodeScannerInput = debounce(this._onChangeStockBarcodeScannerInput.bind(this), 500);
     }
+
     /** Lifecycle
      * Get Inventory Barcode Scanner configuration settings.
      */
@@ -41,35 +42,54 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
      */
     async _onChangeStockBarcodeScannerInput(ev) {
         let $el = $(ev.currentTarget);
-        if (!this.$scannerAlertMessage) { this.$scannerAlertMessage = $(this.shScannerContainer.el).find(".js_cls_alert_msg"); }
-
-        if (!this.$scannerErrorAudio) { this.$scannerErrorAudio = $(this.shScannerContainer.el).find("#sh_barcode_scanner_error_sound"); }
-
-        let location = (this.sh_barcode_scanner_stock_locations || []).filter(location => location.id === this.selectedStockLocationId)
-        if (this.sh_barcode_scanner_stock_locations?.length && !location.length) {
-            location = this.sh_barcode_scanner_stock_locations[0];
-            this.selectedStockLocationId = location[0].id !== undefined && !isNaN(location[0].id) ? parseInt(location[0].id) : 0;
-            browser.localStorage.setItem('sh_barcode_scanner_location_selected', this.selectedStockLocationId);
+        if (!this.$scannerAlertMessage) {
+            this.$scannerAlertMessage = $(this.shScannerContainer.el).find(".js_cls_alert_msg");
         }
-        if (location && location.length) { this.location_name = location[0].display_name }
+
+        if (!this.$scannerErrorAudio) {
+            this.$scannerErrorAudio = $(this.shScannerContainer.el).find("#sh_barcode_scanner_error_sound");
+        }
+
+        let location = (this.sh_barcode_scanner_stock_locations || []).filter(loc => loc.id === this.selectedStockLocationId);
+
+        if (this.sh_barcode_scanner_stock_locations?.length && location.length === 0) {
+            const defaultLocation = this.sh_barcode_scanner_stock_locations[0];
+            if (defaultLocation && defaultLocation.id !== undefined && !isNaN(defaultLocation.id)) {
+                this.selectedStockLocationId = parseInt(defaultLocation.id);
+                browser.localStorage.setItem('sh_barcode_scanner_location_selected', this.selectedStockLocationId);
+                location = [defaultLocation]; // Wrap it as an array for consistency.
+            }
+        }
+
+        if (location.length) {
+            this.location_name = location[0].display_name;
+        } else {
+            console.warn("No valid location found. Ensure stock locations are configured correctly.");
+        }
         const barcode = $el.val();
         if (barcode) {
             const result = await this.rpc('/sh_barcode_scanner/sh_barcode_scanner_search_stock_quant_by_barcode', {
                 barcode: barcode,
                 domain: this.props.domain,
-                location_id:this.sh_barcode_scanner_user_has_stock_multi_locations ? this.selectedStockLocationId: false,
-                location_name:this.sh_barcode_scanner_user_has_stock_multi_locations && this.location_name !== undefined ? this.location_name : "",
+                location_id: this.sh_barcode_scanner_user_has_stock_multi_locations ? this.selectedStockLocationId : false,
+                location_name: this.sh_barcode_scanner_user_has_stock_multi_locations && this.location_name !== undefined ? this.location_name : "",
                 scan_negative_stock: this.sh_scan_negative_stock,
             });
             if (result && result.is_qty_updated) {
                 await this.model.root.load();
                 this.render(true);
-                if (this.$scannerAlertMessage) { this.$scannerAlertMessage.html($('<div class="alert alert-info mt-3" role="alert">' + result.message + ' </div>')); }
+                if (this.$scannerAlertMessage) {
+                    this.$scannerAlertMessage.html($('<div class="alert alert-info mt-3" role="alert">' + result.message + ' </div>'));
+                }
 
             } else {
-                if (this.$scannerAlertMessage) { this.$scannerAlertMessage.html($('<div class="alert alert-danger mt-3" role="alert">' + result.message + ' </div>')); }
+                if (this.$scannerAlertMessage) {
+                    this.$scannerAlertMessage.html($('<div class="alert alert-danger mt-3" role="alert">' + result.message + ' </div>'));
+                }
                 // Play Warning Sound
-                if (this.sh_inven_adjt_barcode_scanner_warn_sound && this.$scannerErrorAudio) { this.$scannerErrorAudio[0].play(); }
+                if (this.sh_inven_adjt_barcode_scanner_warn_sound && this.$scannerErrorAudio) {
+                    this.$scannerErrorAudio[0].play();
+                }
             }
             $el.val('');
         }
@@ -77,7 +97,7 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
         // auto focus barcode input            
         $el.focus();
         $el.keydown();
-        $el.trigger({ type: 'keydown', which: 13 });
+        $el.trigger({type: 'keydown', which: 13});
     }
 
     /**
@@ -87,7 +107,7 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
      */
     async _onClickBarcodeScannerStockQuantApply() {
         var self = this;
-        const result = await this.rpc('/sh_barcode_scanner/sh_barcode_scanner_stock_quant_tree_btn_apply', { domain: this.props.domain });
+        const result = await this.rpc('/sh_barcode_scanner/sh_barcode_scanner_stock_quant_tree_btn_apply', {domain: this.props.domain});
         let error = false;
 
         let title = _t("Something went wrong");
@@ -103,11 +123,15 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
             title: title,
             body: markup(`<p>${escape(result.message)}</p>`),
             autoCloseAfter: error && this.sh_inven_adjt_barcode_scanner_auto_close_popup > 0 ? this.sh_inven_adjt_barcode_scanner_auto_close_popup : 0,
-            confirm: async () => { },
-            cancel: () => { },
+            confirm: async () => {
+            },
+            cancel: () => {
+            },
         });
         if (error) {
-            if (!this.$scannerErrorAudio) { this.$scannerErrorAudio = $(this.shScannerContainer.el).find("#sh_barcode_scanner_error_sound"); }
+            if (!this.$scannerErrorAudio) {
+                this.$scannerErrorAudio = $(this.shScannerContainer.el).find("#sh_barcode_scanner_error_sound");
+            }
             // Play Warning Sound
             if (this.sh_inven_adjt_barcode_scanner_warn_sound && this.$scannerErrorAudio) this.$scannerErrorAudio[0].play();
         }
@@ -127,7 +151,7 @@ class InventoryAdjustmentBarcodeScannerListController extends InventoryReportLis
 
     /**
      * @private
-     * @param {Event} ev 
+     * @param {Event} ev
      */
     async _onChangeScanNegativeStock(ev) {
         if ($(ev.currentTarget).prop('checked')) {
