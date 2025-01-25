@@ -13,7 +13,6 @@ class branding(models.Model):
     code = fields.Integer(string='Code')
 
 
-
 class product_types(models.Model):
     _name = 'product.types'
     _description = 'product type'
@@ -109,38 +108,38 @@ class ProductTemplate(models.Model):
             record.barcode = random_barcode
             _logger.info(f"Generated Random Barcode for Product ID {record.id}: {record.barcode}")
 
-    def update_existing_codes(cr, registry):
-        """ Update default_code and generate random barcodes for all existing products after module upgrade.
-            Resolve duplicates and regenerate codes where necessary. """
-        print("!!! post_init_hook called !!!")
-        _logger.info("Running post_init_hook to update existing codes and resolve duplicates...")
-        try:
-            env = api.Environment(cr, SUPERUSER_ID, {})
-            products = env['product.template'].search([])
-            _logger.info(f"Found {len(products)} products to update.")
 
-            # Track already used default_codes to avoid duplication
-            used_codes = set()
+def update_existing_codes(cr, registry):
+    """ Update default_code and generate random barcodes for all existing products after module upgrade.
+        Resolve duplicates and regenerate codes where necessary. """
+    print("!!! post_init_hook called !!!")
+    _logger.info("Running post_init_hook to update existing codes and resolve duplicates...")
+    try:
+        env = api.Environment(cr, SUPERUSER_ID, {})
+        products = env['product.template'].search([])
+        _logger.info(f"Found {len(products)} products to update.")
 
-            for product in products:
-                # Regenerate default_code
-                product._update_default_code()
+        # Track already used default_codes to avoid duplication
+        used_codes = set()
 
-                # Resolve duplicates
-                if product.default_code in used_codes:
-                    # Append unique identifier if duplicate
-                    product.default_code += str(product.id)
+        for product in products:
+            # Regenerate default_code
+            product._update_default_code()
 
-                # Add to used_codes
-                used_codes.add(product.default_code)
+            # Resolve duplicates
+            if product.default_code in used_codes:
+                # Append unique identifier if duplicate
+                product.default_code += str(product.id)
 
-                # Regenerate barcode
-                product._generate_random_barcode()
+            # Add to used_codes
+            used_codes.add(product.default_code)
 
-            _logger.info("Completed update for all existing products and resolved duplicates.")
-        except Exception as e:
-            _logger.error(f"Error in post_init_hook: {str(e)}")
+            # Regenerate barcode
+            product._generate_random_barcode()
 
+        _logger.info("Completed update for all existing products and resolved duplicates.")
+    except Exception as e:
+        _logger.error(f"Error in post_init_hook: {str(e)}")
 
 # class Productproduct(models.Model):
 #     _inherit = 'product.product'
