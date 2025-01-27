@@ -167,6 +167,7 @@
 <!--                                     >-->
                                     <span t-field="product.product_code"/>
                                     <span t-field="product.display_name"/>
+                                <br/>
                                     <span t-field="product.barcode"/>
 <!--                                </div>-->
                             </t>
