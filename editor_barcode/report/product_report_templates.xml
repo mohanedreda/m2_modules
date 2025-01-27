@@ -145,7 +145,11 @@
                     <div class="o_label_full" t-att-style="table_style">
                         <div style="text-align: center; font-weight: bold; font-size: 10px;">
                             2Me SPORT
+                            <br/>
+                            <span class="o_label_price" t-field="product.lst_price"
+                                          t-options="{'widget': 'monetary', 'label_price': True}"/>
                         </div>
+
                         <div style="height: 1px; background-color: black; width: 100%; margin: 3px auto;">
                         </div>
                         <div class="text-center">
@@ -164,9 +168,6 @@
                                     <span t-field="product.product_code"/>
                                     <span t-field="product.display_name"/>
                                     <span t-field="product.barcode"/>
-                                    <br/>
-                                    <span class="o_label_price" t-field="product.lst_price"
-                                          t-options="{'widget': 'monetary', 'label_price': True}"/>
                                 </div>
                             </t>
                         </div>
