@@ -142,7 +142,7 @@
         <template id="report_template_inherit2" inherit_id="product.report_simple_label_dymo">
             <xpath expr="//div" position="replace">
                 <div class="o_label_sheet o_label_dymo" t-att-style="padding_page">
-                    <div class="o_label_full" t-att-style="table_style">
+                    <div class="o_label_full">
                         <div style="text-align: center; font-weight: bold; font-size: 10px;">
                             2Me SPORT
                             <br/>
@@ -163,12 +163,12 @@
                                          style="padding: 0; z-index: 1;"/>
                                 </div>
                                 <!-- Barcode text centered under the barcode -->
-                                <div class="o_label_name"
-                                     style="display: flex; justify-content: space-between; align-items: center;">
+<!--                                <div class="o_label_name"-->
+<!--                                     >-->
                                     <span t-field="product.product_code"/>
                                     <span t-field="product.display_name"/>
                                     <span t-field="product.barcode"/>
-                                </div>
+<!--                                </div>-->
                             </t>
                         </div>
                     </div>
