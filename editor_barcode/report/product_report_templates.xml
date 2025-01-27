@@ -147,7 +147,7 @@
                             2Me SPORT
                             <br/>
                             <span class="o_label_price" t-field="product.lst_price"
-                                          t-options="{'widget': 'monetary', 'label_price': True}"/>
+                                  t-options="{'widget': 'monetary', 'label_price': True}"/>
                         </div>
 
                         <div style="height: 1px; background-color: black; width: 100%; margin: 3px auto;">
@@ -161,15 +161,14 @@
                                     <div t-out="barcode"
                                          t-options="{'widget': 'barcode', 'quiet': 0, 'symbology': 'auto', 'img_style': barcode_size}"
                                          style="padding: 0; z-index: 1;"/>
-                                </div>
-                                <!-- Barcode text centered under the barcode -->
-<!--                                <div class="o_label_name"-->
-<!--                                     >-->
                                     <span t-field="product.product_code"/>
                                     <span t-field="product.display_name"/>
-                                <br/>
-                                    <span t-field="product.barcode"/>
-<!--                                </div>-->
+                                </div>
+                                <!-- Barcode text centered under the barcode -->
+                                <!--                                <div class="o_label_name"-->
+                                <!--                                     >-->
+                                <span t-field="product.barcode"/>
+                                <!--                                </div>-->
                             </t>
                         </div>
                     </div>
