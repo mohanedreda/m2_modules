@@ -145,35 +145,6 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def update_internal_ref(self):
-        """ Update default_code for all products """
-        for product in self:
-            product._update_default_code()
-            _logger.info(f"Updated internal reference for Product ID {product.id}: {product.default_code}")
-
-    def _update_default_code(self):
-        """ تحديث الكود الافتراضي بناءً على التسلسل الهرمي للفئات """
-        for record in self:
-            # استخرج القيم المطلوبة
-            fashion_segments = str(record.fashion_segments.code) if record.fashion_segments.code else ''
-            product_code = str(record.product_code) if record.product_code else ''
-            product_types = str(record.product_types.code) if record.product_types.code else ''
-            product_specifications = str(
-                record.product_specifications.code) if record.product_specifications.code else ''
-            brand = str(record.branding_category.code) if record.branding_category.code else ''
-            year = str(record.custom_session_id.code) if record.custom_session_id.code else ''
-
-            # بناء الكود الافتراضي مع التأكد من الفريدة
-            parts = [fashion_segments, brand, product_types, product_specifications, year, product_code]
-            new_default_code = "".join(filter(None, parts))  # اجمع الأجزاء غير الفارغة فقط
-
-            # حدّث الكود الافتراضي فقط إذا كان مختلفًا
-            if record.default_code != new_default_code:
-                record.default_code = new_default_code
-                _logger.info(f"تم تحديث الكود الافتراضي للمنتج {record.id}: {record.default_code}")
-class ProductProduct(models.Model):
-    _inherit = 'product.product'
-
-    def update_internal_ref(self):
         """
         Update default_code (internal reference) and barcode for product.product
         based on the related product.template.
@@ -187,11 +158,19 @@ class ProductProduct(models.Model):
                     f"Updated Product ID {product.id}: default_code={product.default_code}, barcode={product.barcode}"
                 )
 
+    def _generate_random_barcode(self):
+        """ Generate a 10-digit random barcode """
+        for record in self:
+            random_barcode = ''.join([str(random.randint(0, 9)) for _ in range(10)])
+            record.barcode = random_barcode
+            _logger.info(f"Generated Random Barcode for Product ID {record.id}: {record.barcode}")
+
     @api.model
     def server_action_update_internal_ref(self):
         """
         Server Action: Update default_code and barcode for selected product.product records.
         """
+        self._generate_random_barcode()
         for product in self.browse(self.env.context.get('active_ids', [])):
             if product.product_tmpl_id:
                 # Fetch values from the related product.template
