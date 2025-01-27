@@ -12,7 +12,7 @@
         <field name="model_id" ref="product.model_product_product"/>
         <field name="state">code</field>
         <field name="code">
-            env['product.product'].trigger_update_code()
+            env['product.product'].server_action_update_internal_ref()
         </field>
     </record>
 </odoo>
