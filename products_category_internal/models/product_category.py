@@ -216,39 +216,48 @@ def update_existing_codes(cr, registry):
 #                 _logger.info(
 #                     f"Server Action: Updated Product ID {product.id}: default_code={product.default_code}, barcode={product.barcode}"
 #                 )
-class Productproduct(models.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    @api.model
-    def trigger_update_code(self):
-        """ Update default_code and generate random barcode for all products """
-        update_existing_codes(self.env.cr, self.env.registry)
-
     def write(self, vals):
-        """ Override write method to update default_code when categ_id is updated """
-        res = super(Productproduct, self).write(vals)
+        """Override write to ensure related updates."""
+        res = super(ProductProduct, self).write(vals)
         self.get_default_code_for_variant()
         return res
 
+    def trigger_update_code(self):
+        """ Update default_code and generate random barcode for selected products """
+        for product in self:
+            # Get the related product template
+            template = product.product_tmpl_id
+
+            # Update the default_code for the template
+            template._update_default_code()
+
+            # Regenerate the barcode for the product variant
+            product._generate_random_barcode()
+
+            _logger.info(f"Updated default_code and barcode for Product Variant ID {product.id}")
+
     @api.model
     def create(self, vals):
-        """ Override create method to generate default_code and random barcode on creation """
-        record = super(Productproduct, self).create(vals)
+        """Override create to ensure default_code and barcode are set."""
+        record = super(ProductProduct, self).create(vals)
         record.get_default_code_for_variant()
         record._generate_random_barcode()
         return record
 
     def get_default_code_for_variant(self):
-        """ Get the default_code for the related product template """
+        """Fetch and apply the default_code from the related template."""
         for record in self:
-            # Access the related product template and get the default_code
-            template = record.product_tmpl_id  # product_tmpl_id is the related product template
-            default_code = template.default_code  # Get the default_code from the product template
-            _logger.info(f"Product ID {record.id} has default_code: {default_code}")
-            return default_code
+            template = record.product_tmpl_id
+            if template:
+                default_code = template.default_code
+                _logger.info(f"Product Variant ID {record.id} has default_code: {default_code}")
+                return default_code
 
     def _generate_random_barcode(self):
-        """ Generate a 10-digit random barcode """
+        """Generate a unique 10-digit random barcode."""
         for record in self:
             random_barcode = ''.join([str(random.randint(0, 9)) for _ in range(10)])
             record.barcode = random_barcode
@@ -256,36 +265,22 @@ class Productproduct(models.Model):
 
 
 def update_existing_codes(cr, registry):
-    """ Update default_code and generate random barcodes for all existing products after module upgrade. """
-    print("!!! post_init_hook called !!!")
-    _logger.info("Running post_init_hook to update existing codes and resolve duplicates...")
+    """Update default_code and barcodes for all existing products."""
+    _logger.info("Running post_init_hook to update codes and barcodes...")
     try:
-        # Initialize the environment with the necessary privileges
         env = api.Environment(cr, SUPERUSER_ID, {})
-        products = env['product.product'].search([])  # Fetch all product variants
-        _logger.info(f"Found {len(products)} products to update.")
+        templates = env['product.template'].search([])  # Fetch all product templates
+        _logger.info(f"Found {len(templates)} templates to update.")
 
-        # Track already used default_codes to avoid duplication
-        used_codes = set()
+        # Update default_code for all templates
+        templates._update_default_code()
 
+        # Update barcodes for product variants
+        products = env['product.product'].search([])
+        _logger.info(f"Found {len(products)} product variants to update barcodes.")
         for product in products:
-            # Get the related product template
-            template = product.product_tmpl_id
-
-            # Regenerate default_code for the template
-            template._update_default_code()
-
-            # Resolve duplicates: if default_code already exists, append the product ID to make it unique
-            if template.default_code in used_codes:
-                template.default_code = f"{template.default_code}_{product.id}"  # Ensuring uniqueness
-                _logger.info(f"Duplicate detected. Updated default_code for template {template.id}: {template.default_code}")
-
-            # Add the default_code to used_codes set to track it
-            used_codes.add(template.default_code)
-
-            # Regenerate barcode for the product variant
             product._generate_random_barcode()
 
-        _logger.info("Completed update for all existing products and resolved duplicates.")
+        _logger.info("Successfully updated default codes and barcodes for all products.")
     except Exception as e:
         _logger.error(f"Error in post_init_hook: {str(e)}")

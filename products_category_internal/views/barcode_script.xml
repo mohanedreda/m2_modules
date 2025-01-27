@@ -12,7 +12,9 @@
         <field name="model_id" ref="product.model_product_product"/>
         <field name="state">code</field>
         <field name="code">
-            env['product.product'].trigger_update_code()
+            for record in env['product.product'].browse(env.context.get('active_ids', [])):
+            record.trigger_update_code()
+
         </field>
     </record>
 </odoo>
