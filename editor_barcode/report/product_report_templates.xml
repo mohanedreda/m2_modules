@@ -13,6 +13,12 @@
                                 2 Me SPORT
                             </div>
                             <div style="height: 2px; background-color: black; width: 100%;"></div>
+                            <br>
+
+                            </br>
+                            <div style="text-align: right;">
+                                <strong t-field="product.display_name"/>
+                            </div>
                         </div>
 
                         <div class="o_label_data">
@@ -137,10 +143,10 @@
             <xpath expr="//div" position="replace">
                 <div class="o_label_sheet o_label_dymo" t-att-style="padding_page">
                     <div class="o_label_full" t-att-style="table_style">
-                        <div style="text-align: center; font-weight: bold; font-size: 14px;">
-                            2 Me SPORT
+                        <div style="text-align: center; font-weight: bold; font-size: 10px;">
+                            2Me SPORT
                         </div>
-                        <div style="height: 2px; background-color: black; width: 100%; margin: 5px auto;">
+                        <div style="height: 1px; background-color: black; width: 100%; margin: 3px auto;">
                         </div>
                         <div class="text-center">
                             <small t-field="product.default_code"/>
@@ -154,37 +160,16 @@
                                 </div>
                                 <!-- Barcode text centered under the barcode -->
                                 <div class="o_label_name"
-                                     style="line-height: 130%; height: 2.7em; background-color: transparent; display: flex; justify-content: center; align-items: center;">
-                                    <span t-out="barcode"/>
+                                     style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span t-field="product.product_code"/>
+                                    <span t-field="product.display_name"/>
+                                    <span t-field="product.barcode"/>
+                                    <br/>
+                                    <span class="o_label_price" t-field="product.lst_price"
+                                          t-options="{'widget': 'monetary', 'label_price': True}"/>
                                 </div>
                             </t>
                         </div>
-
-                        <!-- Product Variant Section -->
-                        <div style="text-align: center; font-size: 12px; margin-top: 5px;">
-                            <span>product variant</span>
-                        </div>
-                        <div class="o_label_name" style="line-height: 130%;height:2.7em;background-color: transparent;">
-                            <span t-field="product.display_name"/>
-                        </div>
-                        <div class="o_label_left_column" style="padding-left: 10px">
-                            <small class="text-nowrap" t-field="product.default_code"/>
-                            <t>|</t>
-                            <!--                            <t t-esc="product.get_cost_in_code()"/>-->
-                        </div>
-                        <!--                        <div class="text-right" style="padding: 0 4px;">-->
-                        <!--                            <t t-if="product.is_product_variant">-->
-                        <!--                                <strong class="o_label_price_small" t-field="product.lst_price"-->
-                        <!--                                        t-options="{'widget': 'monetary', 'label_price': True}"/>-->
-                        <!--                            </t>-->
-                        <!--                            <t t-else="">-->
-                        <!--                                <strong class="o_label_price_small" t-field="product.list_price"-->
-                        <!--                                        t-options="{'widget': 'monetary', 'label_price': True}"/>-->
-                        <!--                            </t>-->
-                        <!--                            <div class="o_label_extra_data">-->
-                        <!--                                <t t-out="extra_html"/>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </xpath>
