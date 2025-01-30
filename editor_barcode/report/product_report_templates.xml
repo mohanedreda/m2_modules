@@ -13,12 +13,7 @@
                                 2 Me SPORT
                             </div>
                             <div style="height: 2px; background-color: black; width: 100%;"></div>
-                            <br>
 
-                            </br>
-                            <div style="text-align: right;">
-                                <strong t-field="product.display_name"/>
-                            </div>
                         </div>
 
                         <div class="o_label_data">
@@ -30,16 +25,20 @@
                                          t-options="{'widget': 'barcode', 'quiet': 0, 'symbology': 'auto', 'img_style': barcode_size}"
                                          style="padding: 0; z-index: 1;"/>
                                     <span style="color:black" class="text-center" t-out="barcode"/>
+
                                 </t>
                             </div>
 
                             <div class="text-right" style="line-height:normal">
-                                <div class="o_label_extra_data">
-                                    <t t-out="extra_html"/>
-                                </div>
+<!--                                <div class="o_label_extra_data">-->
+<!--                                    <t t-out="extra_html"/>-->
+<!--                                </div>-->
                                 <t t-if="product.is_product_variant">
                                     <span class="o_label_price" t-field="product.lst_price"
                                           t-options="{'widget': 'monetary', 'label_price': True}"/>
+                                    <div style="text-align: right; margin-top: auto;">
+                                        <strong t-field="product.display_name"/>
+                                    </div>
                                 </t>
                                 <t t-else="">
                                     <span class="o_label_price" t-field="product.list_price"
@@ -147,7 +146,7 @@
                             2Me SPORT
                             <br/>
                             <span class="o_label_price" t-field="product.lst_price"
-                                          t-options="{'widget': 'monetary', 'label_price': True}"/>
+                                  t-options="{'widget': 'monetary', 'label_price': True}"/>
                         </div>
 
                         <div style="height: 1px; background-color: black; width: 100%; margin: 3px auto;">
@@ -163,12 +162,12 @@
                                          style="padding: 0; z-index: 1;"/>
                                 </div>
                                 <!-- Barcode text centered under the barcode -->
-<!--                                <div class="o_label_name"-->
-<!--                                     >-->
-                                    <span t-field="product.product_code"/>
-                                    <span t-field="product.display_name"/>
-                                    <span t-field="product.barcode"/>
-<!--                                </div>-->
+                                <!--                                <div class="o_label_name"-->
+                                <!--                                     >-->
+                                <span t-field="product.product_code"/>
+                                <span t-field="product.display_name"/>
+                                <span t-field="product.barcode"/>
+                                <!--                                </div>-->
                             </t>
                         </div>
                     </div>
