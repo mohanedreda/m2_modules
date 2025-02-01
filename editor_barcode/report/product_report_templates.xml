@@ -30,9 +30,9 @@
                             </div>
 
                             <div class="text-right" style="line-height:normal">
-<!--                                <div class="o_label_extra_data">-->
-<!--                                    <t t-out="extra_html"/>-->
-<!--                                </div>-->
+                                <!--                                <div class="o_label_extra_data">-->
+                                <!--                                    <t t-out="extra_html"/>-->
+                                <!--                                </div>-->
                                 <t t-if="product.is_product_variant">
                                     <span class="o_label_price" t-field="product.lst_price"
                                           t-options="{'widget': 'monetary', 'label_price': True}"/>
@@ -153,6 +153,7 @@
                         </div>
                         <div class="text-center">
                             <small t-field="product.default_code"/>
+                            <!--                            <small t-field="product.display_name"/>-->
                         </div>
                         <div class="text-center o_label_small_barcode">
                             <t t-if="barcode">
@@ -161,13 +162,16 @@
                                          t-options="{'widget': 'barcode', 'quiet': 0, 'symbology': 'auto', 'img_style': barcode_size}"
                                          style="padding: 0; z-index: 1;"/>
                                 </div>
-                                <!-- Barcode text centered under the barcode -->
-                                <!--                                <div class="o_label_name"-->
-                                <!--                                     >-->
-                                <span t-field="product.product_code"/>
-                                <span t-field="product.display_name"/>
-                                <span t-field="product.barcode"/>
-                                <!--                                </div>-->
+                                <t>
+                                    <div style="text-align: left; margin-top: auto;">
+                                        <small t-field="product.barcode"/>
+                                        <small t-field="product.display_name"/>
+
+                                    </div>
+                                    <div style="text-align: right; margin-top: auto;">
+                                        <small t-field="product.display_name"/>
+                                    </div>
+                                </t>
                             </t>
                         </div>
                     </div>
