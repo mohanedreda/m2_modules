@@ -220,11 +220,29 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def write(self, vals):
-        """Override write to ensure related updates."""
+        """ Ensure variants get the default_code when updated """
         res = super(ProductProduct, self).write(vals)
-        self.get_default_code_for_variant()
+        self._update_variant_default_code()
+        # self.get_default_code_for_variant()
         return res
 
+    @api.model
+    def create(self, vals):
+        """ Ensure default_code is set for new variants """
+        record = super(ProductProduct, self).create(vals)
+        record._update_variant_default_code()
+        record._generate_random_barcode()
+        return record
+
+    def _update_variant_default_code(self):
+        """ Assign default_code from template to variants """
+        for variant in self:
+            if variant.default_code:  # Prevent overwriting if already exists
+                return
+
+            if variant.product_tmpl_id and variant.product_tmpl_id.default_code:
+                variant.sudo().write({'default_code': variant.product_tmpl_id.default_code})
+                _logger.info(f"Updated default_code for Product Variant ID {variant.id}: {variant.default_code}")
     def trigger_update_code(self):
         """ Update default_code and generate random barcode for selected products """
         for product in self:
@@ -238,23 +256,6 @@ class ProductProduct(models.Model):
             product._generate_random_barcode()
 
             _logger.info(f"Updated default_code and barcode for Product Variant ID {product.id}")
-
-    @api.model
-    def create(self, vals):
-        """Override create to ensure default_code and barcode are set."""
-        record = super(ProductProduct, self).create(vals)
-        record.get_default_code_for_variant()
-        record._generate_random_barcode()
-        return record
-
-    def get_default_code_for_variant(self):
-        """Fetch and apply the default_code from the related template."""
-        for record in self:
-            template = record.product_tmpl_id
-            if template:
-                default_code = template.default_code
-                _logger.info(f"Product Variant ID {record.id} has default_code: {default_code}")
-                return default_code
 
     def _generate_random_barcode(self):
         """Generate a unique 10-digit random barcode."""
