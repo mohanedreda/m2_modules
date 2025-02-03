@@ -100,6 +100,9 @@ class ProductTemplate(models.Model):
             if record.default_code != new_default_code:
                 record.default_code = new_default_code
                 _logger.info(f"تم تحديث الكود الافتراضي للمنتج {record.id}: {record.default_code}")
+                for variant in record.product_variant_ids:
+                    variant.sudo().write({'default_code': new_default_code})
+                    _logger.info(f"Updated variant {variant.id} with new default_code: {new_default_code}")
 
     def _generate_random_barcode(self):
         """ Generate a 10-digit random barcode """
@@ -235,14 +238,12 @@ class ProductProduct(models.Model):
         return record
 
     def _update_variant_default_code(self):
-        """ Assign default_code from template to variants """
+        """ Ensure variants inherit the default_code from their template """
         for variant in self:
-            if variant.default_code:  # Prevent overwriting if already exists
-                return
-
-            if variant.product_tmpl_id and variant.product_tmpl_id.default_code:
+            if not variant.default_code and variant.product_tmpl_id.default_code:
                 variant.sudo().write({'default_code': variant.product_tmpl_id.default_code})
-                _logger.info(f"Updated default_code for Product Variant ID {variant.id}: {variant.default_code}")
+                _logger.info(f"Updated default_code for Variant {variant.id}: {variant.default_code}")
+
     def trigger_update_code(self):
         """ Update default_code and generate random barcode for selected products """
         for product in self:
